@@ -1,4 +1,4 @@
-package com.imss.sivimss.oauth.security.jwt;
+package com.imss.sivimss.oauth.security;
 
 import java.util.Date;
 import java.util.Map;

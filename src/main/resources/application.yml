@@ -2,17 +2,14 @@ server:
   port: 8080
   servlet:
     contextPath: /mssivimss-oauth
+
 spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-      
-
-      
+            
   main:
     allow-circular-references: true
-    
-  
         
   servlet:
     multipart:
@@ -25,17 +22,11 @@ logging:
     org.springframework.web: info
     org.hibernate: error
 
-logos:
-  msit_logo_imss: /sintrans_data/LOGOS/logoImss.png
-  msit_logo_sistema: /sintrans_data/LOGOS/logoSistema.png
-
 endpoints:
-   consulta-ooads: http://localhost:8090/dominio/
-   paginado-unidad: http://localhost:8090/dominio/ooad/paginacion
-   dominio-consulta: http://localhost:8094/mssivimss-mod-catalogos
-   ms-reportes: http://localhost:8088/mssivimss-reportes-jpr
+   dominio-consulta: http://localhost:8090/mssivimss-mod-catalogos
 
 jwt:
+  secretkey: funcionamuybien
   secretkey-flujo: funcionamuybien
   secretkey-dominios: funcionamuybiendominio
   expiration-milliseconds: 360
