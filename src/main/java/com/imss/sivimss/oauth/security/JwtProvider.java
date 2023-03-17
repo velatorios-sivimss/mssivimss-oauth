@@ -22,19 +22,19 @@ public class JwtProvider {
 	private String secret;
 
 
-	public String createToken(Usuario usuario, List<Funcionalidad> funcionalidad) {
+	public String createToken(String json, Long tiempo) {
 		
-		Map<String, Object> claims = Jwts.claims().setSubject(usuario.getCorreo());
-		claims.put("nombre", usuario.getNombre() + " " + usuario.getPaterno() + " " + usuario.getMaterno());
+		Map<String, Object> claims = Jwts.claims().setSubject(json);
+		/*claims.put("nombre", usuario.getNombre() + " " + usuario.getPaterno() + " " + usuario.getMaterno());
 		claims.put("curp", usuario.getCurp());
 		claims.put("idRol", usuario.getIdRol());
 		claims.put("desRol", usuario.getDesRol());
 		claims.put("idOficina", usuario.getIdOficina());
 		claims.put("idDelegacion", usuario.getIdDelegacion());
 		claims.put("idVelatorio", usuario.getIdVelatorio());
-		claims.put("permisosUsuario", funcionalidad);
+		claims.put("permisosUsuario", funcionalidad);*/
 		Date now = new Date();
-		Date exp = new Date(now.getTime() + 3600 * 1000);
+		Date exp = new Date(now.getTime() + tiempo);
 		return Jwts.builder()
 				.setHeaderParam("sistema", "sivimss").setClaims(claims).setIssuedAt(now).setExpiration(exp)
 				.signWith(SignatureAlgorithm.HS256, secret).compact();

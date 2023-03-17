@@ -26,7 +26,7 @@ endpoints:
    dominio-consulta: http://localhost:8090/mssivimss-mod-catalogos
 
 jwt:
-  secretkey: funcionamuybien
+  secretkey: funcionamuybienlogin
   secretkey-flujo: funcionamuybien
   secretkey-dominios: funcionamuybiendominio
   expiration-milliseconds: 360

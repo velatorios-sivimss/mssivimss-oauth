@@ -33,7 +33,7 @@ public class Usuario {
 	private String desRol;
 	private String idDelegacion;
 	private String curp;
-
+	private String claveUsuario;
 	
 	public Usuario(Map<String, Object> datos) {
 		this.idUsuario = datos.get("ID_USUARIO").toString();
@@ -49,7 +49,7 @@ public class Usuario {
 		this.idRol = datos.get("ID_ROL").toString();
 		this.desRol = datos.get("DES_ROL").toString();
 		this.curp = datos.get("DES_CURP").toString();
-		//this.statusCuenta = datos.get("ESTATUS_CUENTA").toString();
+		this.claveUsuario = datos.get("CVE_USUARIO").toString();
 	}
 	
 	
@@ -63,7 +63,7 @@ public class Usuario {
 		query.append( BdConstantes.CVE_MATRICULA + " = ");
 		query.append( "'" + user + "' " );
 		query.append( BdConstantes.AND );
-		query.append( BdConstantes.ACTIVO );
+		query.append( "US." + BdConstantes.ACTIVO );
 		query.append( BdConstantes.LIMIT );
 		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
