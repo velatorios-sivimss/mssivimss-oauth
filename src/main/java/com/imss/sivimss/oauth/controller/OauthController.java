@@ -46,4 +46,15 @@ public class OauthController {
 		return menuService.obtener(user, contrasenia);
       
 	}
+	
+	@PostMapping("mensajes")
+	public Response<?> mensajes(@RequestBody Map<String, Object> datos) throws IOException {
+	
+		String user = datos.get(AppConstantes.USUARIO).toString() ;
+		String contrasenia = datos.get(AppConstantes.CONTRASENIA).toString() ;
+		
+		return menuService.mensajes(user, contrasenia);
+      
+	}
+	
 }

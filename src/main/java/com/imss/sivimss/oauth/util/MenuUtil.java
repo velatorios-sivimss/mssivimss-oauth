@@ -63,11 +63,29 @@ public class MenuUtil {
 				}
 				
 				padre.get(i).getModulos().add(menu);
+				break;
 				
 			}
 			
 		}
 		
+	}
+	
+	public Map<String, Object> obtenerMensajes() {
+		
+		Map<String, Object> datos = new HashMap<>();
+		
+		StringBuilder query = new StringBuilder("SELECT ");
+		query.append( "ID_MENSAJE AS idMensaje, " );
+		query.append( "DES_MENSAJE AS desMensaje " );
+		query.append( "FROM SVC_MENSAJE " );
+		query.append( " ORDER BY ID_MENSAJE ASC" );
+		
+		log.info( query.toString() );
+		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
+		
+		datos.put(AppConstantes.QUERY, encoded);
+		return datos;
 	}
 	
 }

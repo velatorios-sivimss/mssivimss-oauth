@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 	private static final Logger log = LoggerFactory.getLogger(MenuServiceImpl.class);
 	
 	@Override
+	@Cacheable("menu-obtener")
 	public Response<?> obtener(String user, String contrasenia) throws IOException {
 		
 		Usuario usuario= usuarioService.obtener(user);
@@ -54,6 +56,17 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 		resp.setDatos( menuBD.get(0) );
 		
 		return resp;
+	}
+
+	@Override
+	@Cacheable("menu-mensajes")
+	public Response<?> mensajes(String user, String contrasenia) throws IOException {
+		
+		MenuUtil menuUtil = new MenuUtil();
+		Response<Object> resp;
+		resp = providerRestTemplate.consumirServicio(menuUtil.obtenerMensajes(), urlDominioConsulta + consulta);
+		return resp;
+		
 	}
 
 }
