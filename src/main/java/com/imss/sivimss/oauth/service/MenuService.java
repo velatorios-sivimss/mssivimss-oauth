@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.imss.sivimss.oauth.util.Response;
 
-public interface OauthService {
+public interface MenuService {
 
-	Response<?> acceder(String user, String contrasenia) throws IOException;
+	Response<?> obtener(String user, String contrasenia) throws IOException;
 	
 }

@@ -3,10 +3,11 @@ package com.imss.sivimss.oauth.service;
 import java.io.IOException;
 import java.util.Map;
 
+import com.imss.sivimss.oauth.beans.Usuario;
 import com.imss.sivimss.oauth.util.Response;
 
-public interface OauthService {
+public interface UsuarioService {
 
-	Response<?> acceder(String user, String contrasenia) throws IOException;
+	Usuario obtener(String user) throws IOException;
 	
 }
