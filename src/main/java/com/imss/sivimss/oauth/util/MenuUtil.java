@@ -1,12 +1,7 @@
 package com.imss.sivimss.oauth.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,28 +11,24 @@ public class MenuUtil {
 
 	private Logger log = LoggerFactory.getLogger(MenuUtil.class);
 	
-	public Map<String, Object> buscar(String idRol, Integer nivel) {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String buscar(String idRol, Integer nivel) {
 		
 		StringBuilder query = new StringBuilder("SELECT ");
-		query.append( "id_tabla_menu AS idTablaMenu, " );
-		query.append( "id_tabla_padre AS idTablaPadre, " );
-		query.append( "id_modulo AS idModulo, " );
-		query.append( "desc_icono AS descIcono, " );
-		query.append( "titulo " );
-		query.append( "FROM menu " );
+		query.append( "ID_TABLA_MENU AS idTablaMenu, " );
+		query.append( "ID_TABLA_PADRE AS idTablaPadre, " );
+		query.append( "ID_MODULO AS idModulo, " );
+		query.append( "DESC_ICONO AS descIcono, " );
+		query.append( "DES_TITULO AS titulo " );
+		query.append( "FROM SVT_MENU " );
 		query.append( "WHERE ID_ROL = ");
 		query.append( idRol + " ");
 		query.append( "AND " );
-		query.append( "nivel = "  + nivel);
-		query.append( " ORDER BY id_tabla_menu ASC" );
+		query.append( "NUM_NIVEL = "  + nivel);
+		query.append( " ORDER BY ID_TABLA_MENU ASC" );
 		
 		log.info( query.toString() );
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
 	
 	public void organizar(List<MenuResponse> padre, List<MenuResponse> hijo) {
@@ -71,9 +62,7 @@ public class MenuUtil {
 		
 	}
 	
-	public Map<String, Object> obtenerMensajes() {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String obtenerMensajes() {
 		
 		StringBuilder query = new StringBuilder("SELECT ");
 		query.append( "ID_MENSAJE AS idMensaje, " );
@@ -82,10 +71,8 @@ public class MenuUtil {
 		query.append( " ORDER BY ID_MENSAJE ASC" );
 		
 		log.info( query.toString() );
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
 	
 }

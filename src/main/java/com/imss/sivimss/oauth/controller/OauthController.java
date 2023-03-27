@@ -1,6 +1,5 @@
 package com.imss.sivimss.oauth.controller;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class OauthController {
 	private MenuService menuService;
 	
 	@PostMapping("acceder")
-	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws IOException {
+	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString() ;
 		String contrasenia = datos.get(AppConstantes.CONTRASENIA).toString() ;
@@ -38,22 +37,27 @@ public class OauthController {
 	}
 	
 	@PostMapping("menu")
-	public Response<?> menu(@RequestBody Map<String, Object> datos) throws IOException {
+	public Response<?> menu(@RequestBody Map<String, Object> datos) throws Exception {
 	
-		String user = datos.get(AppConstantes.USUARIO).toString() ;
-		String contrasenia = datos.get(AppConstantes.CONTRASENIA).toString() ;
+		String idRol = datos.get(AppConstantes.IDROL).toString() ;
 		
-		return menuService.obtener(user, contrasenia);
+		return menuService.obtener(idRol);
       
 	}
 	
 	@PostMapping("mensajes")
-	public Response<?> mensajes(@RequestBody Map<String, Object> datos) throws IOException {
-	
-		String user = datos.get(AppConstantes.USUARIO).toString() ;
-		String contrasenia = datos.get(AppConstantes.CONTRASENIA).toString() ;
+	public Response<?> mensajes(@RequestBody Map<String, Object> datos) throws Exception {
 		
-		return menuService.mensajes(user, contrasenia);
+		return menuService.mensajes();
+      
+	}
+	
+	@PostMapping("permisos")
+	public Response<?> permisos(@RequestBody Map<String, Object> datos) throws Exception {
+	
+		String idRol = datos.get(AppConstantes.IDROL).toString() ;
+		
+		return menuService.permisos(idRol);
       
 	}
 	

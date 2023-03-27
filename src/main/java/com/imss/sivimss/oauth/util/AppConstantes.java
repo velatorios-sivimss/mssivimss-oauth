@@ -34,6 +34,13 @@ public class AppConstantes {
 
 	public static final String USUARIO= "usuario";
 	public static final String CONTRASENIA= "password";
+	public static final String CONTRASENIA_ANTERIOR= "passwordAnterior";
+	public static final String CONTRASENIA_NUEVA= "passwordNuevo";
+
+	public static final String CIRCUITBREAKER = "El servicio no responde, no permite más llamadas.";
+	
+	public static final String IDROL = "idRol";
+	
 	
 	private AppConstantes() {
 	    throw new IllegalStateException("AppConstantes class");

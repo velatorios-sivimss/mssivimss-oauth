@@ -1,11 +1,7 @@
 package com.imss.sivimss.oauth.beans;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.DatatypeConverter;
-
-import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,9 +49,7 @@ public class Usuario {
 	}
 	
 	
-	public Map<String, Object> buscarUsuario(String user) {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String buscarUsuario(String user) {
 		
 		StringBuilder query = new StringBuilder(BdConstantes.SELECT_USUARIOS);
 		query.append( "INNER JOIN SVC_ROL ROL ON ROL.ID_ROL = US.ID_ROL " );
@@ -65,9 +59,8 @@ public class Usuario {
 		query.append( BdConstantes.AND );
 		query.append( "US." + BdConstantes.ACTIVO );
 		query.append( BdConstantes.LIMIT );
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
+	
 }

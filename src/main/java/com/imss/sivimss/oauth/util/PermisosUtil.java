@@ -1,15 +1,8 @@
 package com.imss.sivimss.oauth.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
-
 public class PermisosUtil {
 
-	public Map<String, Object> buscarFuncionalidad(String idRol) {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String buscarFuncionalidad(String idRol) {
 		
 		StringBuilder query = new StringBuilder("SELECT DISTINCT(ID_FUNCIONALIDAD) ");
 		query.append( "FROM SVC_ROL_FUNCIONALIDAD_PERMISO " );
@@ -18,15 +11,11 @@ public class PermisosUtil {
 		query.append( BdConstantes.AND );
 		query.append( BdConstantes.ACTIVO );
 		query.append( "ORDER BY ID_FUNCIONALIDAD ASC" );
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
 	
-	public Map<String, Object> buscarPermisos(String idRol, String idFuncionalidad) {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String buscarPermisos(String idRol, String idFuncionalidad) {
 		
 		StringBuilder query = new StringBuilder("SELECT PER.* ");
 		query.append( "FROM SVC_PERMISO PER " );
@@ -34,25 +23,19 @@ public class PermisosUtil {
 		query.append( "WHERE RFP.ID_ROL = " + idRol + " ");
 		query.append( "AND RFP.ID_FUNCIONALIDAD = " + idFuncionalidad + " ");
 		query.append( "ORDER BY PER.ID_PERMISO" );
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
 	
-	public Map<String, Object> tiempoToken() {
-		
-		Map<String, Object> datos = new HashMap<>();
+	public String tiempoToken() {
 		
 		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
 		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
 		query.append( "WHERE DES_PARAMETRO = 'TIEMPO TOKEN' ");
 		query.append( "AND CVE_ESTATUS = '1' ");
 		query.append( "LIMIT 1 ");
-		String encoded = DatatypeConverter.printBase64Binary(query.toString().getBytes());
 		
-		datos.put(AppConstantes.QUERY, encoded);
-		return datos;
+		return query.toString();
 	}
 	
 	
