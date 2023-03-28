@@ -1,16 +1,12 @@
 package com.imss.sivimss.oauth.security;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.imss.sivimss.oauth.beans.Usuario;
-import com.imss.sivimss.oauth.model.Funcionalidad;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,14 +21,6 @@ public class JwtProvider {
 	public String createToken(String json, Long tiempo) {
 		
 		Map<String, Object> claims = Jwts.claims().setSubject(json);
-		/*claims.put("nombre", usuario.getNombre() + " " + usuario.getPaterno() + " " + usuario.getMaterno());
-		claims.put("curp", usuario.getCurp());
-		claims.put("idRol", usuario.getIdRol());
-		claims.put("desRol", usuario.getDesRol());
-		claims.put("idOficina", usuario.getIdOficina());
-		claims.put("idDelegacion", usuario.getIdDelegacion());
-		claims.put("idVelatorio", usuario.getIdVelatorio());
-		claims.put("permisosUsuario", funcionalidad);*/
 		Date now = new Date();
 		Date exp = new Date(now.getTime() + tiempo);
 		return Jwts.builder()

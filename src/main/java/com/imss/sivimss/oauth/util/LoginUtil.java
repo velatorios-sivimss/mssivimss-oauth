@@ -76,4 +76,23 @@ public class LoginUtil {
 		return lista;
 	}
 	
+	public String actNumIntentos( String idLogin, Integer numIntentos, Integer maxNumIntentos ) {
+		
+		StringBuilder query = new StringBuilder(BdConstantes.UPDATE);
+		query.append( "SVT_LOGIN " );
+		query.append( "SET `NUM_INTENTOS` = " + numIntentos );
+		
+		if( numIntentos >= maxNumIntentos ) {
+			query.append( ", `FEC_BLOQUEO` = NOW() " );
+		}else {
+			query.append( ", `FEC_BLOQUEO` = null " );
+		}
+		
+		query.append( " WHERE (`ID_LOGIN` = '"+ idLogin +"') " );
+		
+		log.info( query.toString() );
+		
+		return query.toString();
+	}
+	
 }

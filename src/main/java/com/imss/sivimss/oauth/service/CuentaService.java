@@ -10,4 +10,11 @@ public interface CuentaService {
 	
 	public Boolean actualizarContra(String idLogin, String idUsuario, String contrasenia) throws Exception;
 	
+	public void validarSiap(String cveUsuario) throws Exception;
+	
+	public void actNumIntentos(String idLogin, Integer numIntentos) throws Exception;
+	
+	public Integer validaNumIntentos(String idLogin, String fechaBloqueo, String numIntentos) throws Exception;
+	
+	public Integer obtenerMaxNumIntentos() throws Exception;
 }

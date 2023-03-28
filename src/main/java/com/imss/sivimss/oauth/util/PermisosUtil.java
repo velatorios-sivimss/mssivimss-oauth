@@ -27,16 +27,4 @@ public class PermisosUtil {
 		return query.toString();
 	}
 	
-	public String tiempoToken() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'TIEMPO TOKEN' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		return query.toString();
-	}
-	
-	
 }

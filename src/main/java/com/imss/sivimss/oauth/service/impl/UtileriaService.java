@@ -41,6 +41,8 @@ public class UtileriaService {
 
 	private static final String FALLO_QUERY = "Fallo al ejecutar el Query  ";
 	
+	protected static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
+	
 	public List<Map<String, Object>> consultaGenericaPorQuery(String query) throws Exception {
 		List<Map<String, Object>> resp = new ArrayList<>();
 
