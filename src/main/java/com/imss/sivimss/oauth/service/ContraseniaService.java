@@ -8,4 +8,6 @@ public interface ContraseniaService {
 	
 	public Integer validarFecha(String fecha) throws Exception;
 	
+	public Response<?> generarCodigo(String user) throws Exception;
+	
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
   servlet:
     contextPath: /mssivimss-oauth
 
@@ -49,6 +49,7 @@ logging:
 
 endpoints:
    dominio-consulta: http://localhost:8090/mssivimss-mod-catalogos
+   envio-correo: http://localhost:8080/mssivimss-envio-correos/envioDeCorreos/envio
 
 jwt:
   secretkey: funcionamuybienlogin

@@ -8,24 +8,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.imss.sivimss.oauth.beans.Usuario;
 import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.model.Login;
+import com.imss.sivimss.oauth.model.request.EnvioCorreosRequest;
 import com.imss.sivimss.oauth.service.ContraseniaService;
 import com.imss.sivimss.oauth.service.CuentaService;
+import com.imss.sivimss.oauth.service.UsuarioService;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
+import com.imss.sivimss.oauth.util.LoginUtil;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
+import com.imss.sivimss.oauth.util.ProviderServiceRestTemplate;
 import com.imss.sivimss.oauth.util.Response;
 
 @Service
 public class ContraseniaServiceImpl extends UtileriaService implements ContraseniaService {
 	
+	@Value("${endpoints.envio-correo}")
+	private String urlEnvioCorreo;
+	
 	@Autowired
 	private CuentaService cuentaService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private ProviderServiceRestTemplate providerRestTemplate;
+	
+	private static final Logger log = LoggerFactory.getLogger(ContraseniaServiceImpl.class);
 	
 	@Override
 	public Response<?> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
@@ -99,6 +118,46 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		}
 		
 		return estatus;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response<?> generarCodigo(String user) throws Exception {
+		Usuario usuario= usuarioService.obtener(user);
+		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
+		List<Map<String, Object>> datos;
+		List<Map<String, Object>> mapping;
+		ParametrosUtil parametrosUtil = new ParametrosUtil();
+		Integer longitud;
+		LoginUtil loginUtil = new LoginUtil();
+		String codigo;
+		Response<Object> resp;
+		
+		datos = consultaGenericaPorQuery( parametrosUtil.longCodigo() );
+		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+		
+		longitud = Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		
+		codigo = loginUtil.generarCodigo(longitud);
+		
+		EnvioCorreosRequest datosCorreo = loginUtil.cuerpoCorreo(usuario.getNombre(), usuario.getCorreo(), codigo);
+		
+		//Hacemos el consumo para enviar el codigo por correo
+		resp = providerRestTemplate.consumirServicio(datosCorreo, urlEnvioCorreo);
+		
+		if (resp.getCodigo() != 200) {
+			return resp;
+		}
+		
+		//Guardamos el codigo en la BD
+		Boolean exito = actualizaGenericoPorQuery( loginUtil.actCodSeg(login.getIdLogin(), codigo) );
+		
+		log.info("exito = " + exito.toString());
+		
+		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
+				codigo );
+		
+		return resp;
 	}
 	
 }

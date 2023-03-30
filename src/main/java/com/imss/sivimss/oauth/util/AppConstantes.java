@@ -36,6 +36,7 @@ public class AppConstantes {
 	public static final String CONTRASENIA= "password";
 	public static final String CONTRASENIA_ANTERIOR= "passwordAnterior";
 	public static final String CONTRASENIA_NUEVA= "passwordNuevo";
+	public static final String CODIGO= "codigo";
 
 	public static final String CIRCUITBREAKER = "El servicio no responde, no permite más llamadas.";
 	

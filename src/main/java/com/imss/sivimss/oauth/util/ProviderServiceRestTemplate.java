@@ -25,9 +25,9 @@ public class ProviderServiceRestTemplate {
 	
 	private static final Logger log = LoggerFactory.getLogger(ProviderServiceRestTemplate.class);
 	
-	public Response<Object> consumirServicio(Map<String, Object> dato, String url) throws IOException {
+	public Response<Object> consumirServicio(Object dato, String url) throws IOException {
 		try {
-			Response respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayToken(url, new EnviarDatosRequest(dato),jwtTokenProvider.createToken(""), Response.class);
+			Response respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayToken(url, dato,jwtTokenProvider.createToken(""), Response.class);
 			return validarResponse(respuestaGenerado);
 		} catch (IOException exception) {
 			log.error("Ha ocurrido un error al recuperar la informacion");

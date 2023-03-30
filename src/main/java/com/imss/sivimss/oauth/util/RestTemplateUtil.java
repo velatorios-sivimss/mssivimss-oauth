@@ -68,7 +68,7 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArrayToken(String url, EnviarDatosRequest body, String subject,
+	public Response<?> sendPostRequestByteArrayToken(String url, Object body, String subject,
 			Class<?> clazz) throws IOException {
 		Response<?> responseBody = new Response<>();
 		HttpHeaders headers = RestTemplateUtil.createHttpHeadersToken(subject);

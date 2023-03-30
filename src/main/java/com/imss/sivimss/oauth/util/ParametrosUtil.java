@@ -7,81 +7,43 @@ public class ParametrosUtil {
 
 	private Logger log = LoggerFactory.getLogger(ParametrosUtil.class);
 	
+	private static final String QUERY_INICIO = "SELECT TIP_PARAMETRO FROM SVC_PARAMETRO_SISTEMA WHERE DES_PARAMETRO = ";
+	private static final String QUERY_FINAL = " AND CVE_ESTATUS = '1' LIMIT 1";
+	
 	public String tiempoToken() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'TIEMPO TOKEN' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		log.info( query.toString() );
-		
-		return query.toString();
+		return armarQuery("TIEMPO TOKEN");
 	}
 	
 	public String consultarSiap() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'CONSULTAR SIAP' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		log.info( query.toString() );
-		
-		return query.toString();
+		return armarQuery("CONSULTAR SIAP");
 	}
 	
 	public String numDias() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'NUM DIAS A CADUCAR' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		log.info( query.toString() );
-		
-		return query.toString();
+		return armarQuery("NUM DIAS A CADUCAR");
 	}
 	
 	public String numMeses() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'NUM MESES VIGENCIA' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		log.info( query.toString() );
-		
-		return query.toString();
+		return armarQuery("NUM MESES VIGENCIA");
 	}
 	
 	public String numIntentos() {
-		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'NUM MAXIMO DE INTENTOS' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
-		log.info( query.toString() );
-		
-		return query.toString();
+		return armarQuery("NUM MAXIMO DE INTENTOS");
 	}
 	
 	public String tiempoBloqueo() {
+		return armarQuery("MINUTOS DE BLOQUEO");
+	}
+	
+	public String longCodigo() {
+		return armarQuery("LONGITUD CODIGO NUMERICO");
+	}
+	
+	private String armarQuery(String param) {
 		
-		StringBuilder query = new StringBuilder("SELECT TIP_PARAMETRO ");
-		query.append( "FROM SVC_PARAMETRO_SISTEMA " );
-		query.append( "WHERE DES_PARAMETRO = 'MINUTOS DE BLOQUEO' ");
-		query.append( "AND CVE_ESTATUS = '1' ");
-		query.append( "LIMIT 1 ");
-		
+		StringBuilder query = new StringBuilder( QUERY_INICIO );
+		query.append( "'" + param + "'");
+		query.append( QUERY_FINAL );
 		log.info( query.toString() );
-		
 		return query.toString();
 	}
 }

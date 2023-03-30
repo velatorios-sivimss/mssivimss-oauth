@@ -2,9 +2,13 @@ package com.imss.sivimss.oauth.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.imss.sivimss.oauth.model.request.CorreoRequest;
+import com.imss.sivimss.oauth.model.request.EnvioCorreosRequest;
 
 public class LoginUtil {
 
@@ -93,6 +97,46 @@ public class LoginUtil {
 		log.info( query.toString() );
 		
 		return query.toString();
+	}
+	
+	public String generarCodigo( Integer longitud ) {
+		
+		StringBuilder query = new StringBuilder();
+		Random random = new Random();
+		Integer numAleatorio;
+		
+		for(int i=0; i<longitud; i++) {
+			
+			numAleatorio = random.nextInt(10);
+			log.info(numAleatorio.toString());
+			query.append( numAleatorio );
+		}
+		
+		log.info( query.toString() );
+		return query.toString();
+	}
+	
+	public String actCodSeg(String idLogin, String codigo) {
+		
+		StringBuilder query = new StringBuilder(BdConstantes.UPDATE);
+		query.append( "SVT_LOGIN " );
+		query.append( "SET `CVE_CODIGO_SEGURIDAD` = " + codigo );
+		query.append( ", `FEC_CODIGO_SEGURIDAD` = NOW() " );
+		query.append( " WHERE (`ID_LOGIN` = '"+ idLogin +"') " );
+		log.info( query.toString() );
+		return query.toString();
+		
+	}
+	
+	public EnvioCorreosRequest cuerpoCorreo(String nombre, String email, String codigo){
+		
+		EnvioCorreosRequest envioCorreosRequest = new EnvioCorreosRequest();
+		CorreoRequest correo = new CorreoRequest(nombre, email, codigo);
+		ArrayList<CorreoRequest> lista = new ArrayList<>();
+		lista.add(correo);
+		envioCorreosRequest.setUsuarios(lista);		
+		return envioCorreosRequest;
+		
 	}
 	
 }

@@ -12,5 +12,5 @@ import java.util.Map;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EnviarDatosRequest {
-	private Map<String, Object> datos;
+	private Map<String, Object> usuarios;
 }
