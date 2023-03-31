@@ -18,6 +18,7 @@ import com.imss.sivimss.oauth.model.Permisos;
 import com.imss.sivimss.oauth.model.response.MenuResponse;
 import com.imss.sivimss.oauth.service.MenuService;
 import com.imss.sivimss.oauth.util.MenuUtil;
+import com.imss.sivimss.oauth.util.ParametrosUtil;
 import com.imss.sivimss.oauth.util.PermisosUtil;
 import com.imss.sivimss.oauth.util.Response;
 
@@ -26,6 +27,7 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 	
 	private static final Logger log = LoggerFactory.getLogger(MenuServiceImpl.class);
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Cacheable("menu-obtener")
 	public Response<?> obtener(String idRol) throws Exception {
@@ -34,8 +36,14 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 		MenuUtil menuUtil = new MenuUtil();
 		List<Map<String, Object>> datos;
 		Response<Object> resp;
+		ParametrosUtil parametrosUtil = new ParametrosUtil();
+		List<Map<String, Object>> mapping;
 		
-		for(int i=0; i<4; i++) {
+		datos = consultaGenericaPorQuery( parametrosUtil.numNiveles() );
+		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+		Integer niveles = Integer.parseInt( mapping.get(0).get("TIP_PARAMETRO").toString() );
+		
+		for(int i=1; i<=niveles; i++) {
 			datos = consultaGenericaPorQuery( menuUtil.buscar(idRol, i) );
 			menuBD.add( Arrays.asList(modelMapper.map(datos, MenuResponse[].class)) );
 		}

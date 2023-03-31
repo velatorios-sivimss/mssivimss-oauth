@@ -7,10 +7,9 @@ import lombok.Data;
 @Data
 public class MenuResponse {
 
-	private String idTablaMenu;
-	private String idTablaPadre;
+	private String idModuloPadre;
 	private String idModulo;
-	private String descIcono;
+	private String idFuncionalidad;
 	private String titulo;
 	private List<MenuResponse> modulos;
 	

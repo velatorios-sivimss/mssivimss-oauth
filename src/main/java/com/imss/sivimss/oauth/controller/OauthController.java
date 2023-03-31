@@ -26,7 +26,7 @@ public class OauthController {
 	@Autowired
 	private MenuService menuService;
 	
-	@PostMapping("acceder")
+	@PostMapping("login")
 	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString() ;

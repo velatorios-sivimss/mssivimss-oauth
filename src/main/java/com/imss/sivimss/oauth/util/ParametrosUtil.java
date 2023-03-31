@@ -38,6 +38,14 @@ public class ParametrosUtil {
 		return armarQuery("LONGITUD CODIGO NUMERICO");
 	}
 	
+	public String tiempoCodigo() {
+		return armarQuery("TIEMPO CODIGO NUMERICO");
+	}
+	
+	public String numNiveles() {
+		return armarQuery("NUM NIVELES");
+	}
+	
 	private String armarQuery(String param) {
 		
 		StringBuilder query = new StringBuilder( QUERY_INICIO );

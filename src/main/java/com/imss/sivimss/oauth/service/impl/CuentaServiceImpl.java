@@ -63,6 +63,19 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		}else {
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
 			login = lista.get(0);
+			
+			if( datos.get(0).get("FEC_CAMBIO_CONTRASENIA") != null ) {
+				login.setFecCamContra( datos.get(0).get("FEC_CAMBIO_CONTRASENIA").toString() );
+			}
+			
+			if( datos.get(0).get("CVE_CODIGO_SEGURIDAD") != null ) {
+				login.setCodSeguridad( datos.get(0).get("CVE_CODIGO_SEGURIDAD").toString() );
+			}
+			
+			if( datos.get(0).get("FEC_CODIGO_SEGURIDAD") != null ) {
+				login.setFecCodSeguridad( datos.get(0).get("FEC_CODIGO_SEGURIDAD").toString() );
+			}
+			
 		}
 		
 		

@@ -14,17 +14,17 @@ public class MenuUtil {
 	public String buscar(String idRol, Integer nivel) {
 		
 		StringBuilder query = new StringBuilder("SELECT ");
-		query.append( "ID_TABLA_MENU AS idTablaMenu, " );
-		query.append( "ID_TABLA_PADRE AS idTablaPadre, " );
-		query.append( "ID_MODULO AS idModulo, " );
-		query.append( "DESC_ICONO AS descIcono, " );
-		query.append( "DES_TITULO AS titulo " );
-		query.append( "FROM SVT_MENU " );
-		query.append( "WHERE ID_ROL = ");
+		query.append( "M.ID_MODULO AS idModulo, " );
+		query.append( "M.ID_MODULO_PADRE AS idModuloPadre, " );
+		query.append( "M.ID_FUNCIONALIDAD AS idFuncionalidad, " );
+		query.append( "M.DES_TITULO AS titulo " );
+		query.append( "FROM SVT_MENU M " );
+		query.append( "LEFT JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_FUNCIONALIDAD " );
+		query.append( "AND RP.ID_ROL = ");
 		query.append( idRol + " ");
-		query.append( "AND " );
-		query.append( "NUM_NIVEL = "  + nivel);
-		query.append( " ORDER BY ID_TABLA_MENU ASC" );
+		query.append( " AND RP.CVE_ESTATUS = 1 ");
+		query.append( "WHERE M.NUM_NIVEL = "  + nivel);
+		query.append( " GROUP BY M.ID_FUNCIONALIDAD " );
 		
 		log.info( query.toString() );
 		
@@ -41,12 +41,12 @@ public class MenuUtil {
 	
 	private void insertar(MenuResponse menu, List<MenuResponse> padre) {
 		
-		String idPadre= menu.getIdTablaPadre();
+		String idPadre= menu.getIdModuloPadre();
 		log.info( "idPadre = " + idPadre);
 		
 		for( int i=0; i<padre.size(); i++ ) {
 			
-			if( idPadre.equals( padre.get(i).getIdTablaMenu() )  ) {
+			if( idPadre.equals( padre.get(i).getIdModulo() )  ) {
 				
 				if(padre.get(i).getModulos() == null) {
 					List<MenuResponse> modulos = new ArrayList<>();

@@ -155,7 +155,51 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		log.info("exito = " + exito.toString());
 		
 		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
-				codigo );
+				"Codigo enviado al correo del Usuario " );
+		
+		return resp;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response<?> validarCodigo(String user, String codigo) throws Exception {
+		//Obtenemos el codigo desde BD
+		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
+		List<Map<String, Object>> datos;
+		List<Map<String, Object>> mapping;
+		ParametrosUtil parametrosUtil = new ParametrosUtil();
+		Response<Object> resp = new Response<>(true, HttpStatus.BAD_REQUEST.value(), ConstantsMensajes.DENEGADO.getMensaje(),
+				"Datos Incorrectos" );
+		
+		datos = consultaGenericaPorQuery( parametrosUtil.tiempoCodigo() );
+		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+		
+		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		
+		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Codigo Incorrecto");
+		}
+		
+		if( login.getFecCodSeguridad() != null && !login.getFecCodSeguridad().isEmpty() ) {
+			SimpleDateFormat formatter;
+			Calendar calendar = Calendar.getInstance();
+			formatter = new SimpleDateFormat(PATTERN);
+			
+			Date fechaCodigo = formatter.parse(login.getFecCodSeguridad());
+			
+			calendar.setTime(fechaCodigo);
+			calendar.add(Calendar.MINUTE , tiempoCodigo);
+			fechaCodigo = calendar.getTime();
+			
+			Date actual =  new Date();
+			
+			if( actual.before(fechaCodigo) ) {
+				resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
+						"Codigo Valido" );
+			}else {
+				throw new BadRequestException(HttpStatus.UNAUTHORIZED, "Codigo expirado, favor de crear uno nuevo");
+			}
+		}
 		
 		return resp;
 	}

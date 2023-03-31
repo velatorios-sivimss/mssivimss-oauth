@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
@@ -62,7 +63,6 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		if( login.getEstatusCuenta().equalsIgnoreCase( BdConstantes.ESTATUS_PRE_ACTIVO ) ) {
 			
 			respuesta.put("preActivo", true);
-			respuesta.put("contrasenia", contrasenia);
 			
 			resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 					respuesta );
@@ -89,9 +89,9 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		if( estatusContra.equals( EstatusVigenciaEnum.VENCIDA.getId() ) ) {
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Contraseña Vencida");
 		}else if ( estatusContra.equals( EstatusVigenciaEnum.PROXIMA_VENCER.getId() ) ) {
-			respuesta.put("Contrasenia_Proxima_Vencer", true);
+			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, true);
 		}else {
-			respuesta.put("Contrasenia_Proxima_Vencer", false);
+			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, false);
 		}
 		
 		

@@ -33,7 +33,7 @@ public class ContraseniaController {
       
 	}
 	
-	@PostMapping("/generar-codigo")
+	@PostMapping("/genera-codigo")
 	public Response<?> generarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString() ;
@@ -42,13 +42,13 @@ public class ContraseniaController {
       
 	}
 	
-	@PostMapping("/validar-codigo")
+	@PostMapping("/valida-codigo")
 	public Response<?> validarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString() ;
 		String codigo = datos.get(AppConstantes.CODIGO).toString() ;
 		
-		return contraseniaService.generarCodigo( user );
+		return contraseniaService.validarCodigo( user, codigo );
       
 	}
 	
