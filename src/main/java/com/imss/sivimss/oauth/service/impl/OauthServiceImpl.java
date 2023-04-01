@@ -51,14 +51,13 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		
 		Integer intentos = cuentaService.validaNumIntentos(login.getIdLogin(), login.getFecBloqueo(), login.getNumIntentos());
 		
-		if ( !contrasenia.equals(usuario.getPassword()) ) {
+		if ( !passwordEncoder.matches( contrasenia, usuario.getPassword() ) ) {
 			intentos++;
 			cuentaService.actNumIntentos(login.getIdLogin(), intentos);
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Usuario o Contraseña incorrecta");
 		}else {
 			cuentaService.actNumIntentos(login.getIdLogin(), 0);
 		}
-		
 		
 		if( login.getEstatusCuenta().equalsIgnoreCase( BdConstantes.ESTATUS_PRE_ACTIVO ) ) {
 			

@@ -10,7 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.imss.sivimss.oauth.config.mymapper.Consultas;
@@ -33,7 +35,16 @@ public class UtileriaService {
 	
 	@Autowired
 	private Database database;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
+	@Value("${formato_fecha_hora}") 
+	String formatoSQL;
+	
+	@Value("${patron_formato_fecha_hora}") 
+	String patronSQL;
+	
 	protected static Consultas consultas = null;
 	protected static AnnotationConfigApplicationContext context = null;
 

@@ -150,7 +150,12 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			calendar.add(Calendar.MINUTE , tiempoBloqueo);
 			bloqueo = calendar.getTime();
 			
-			Date actual =  new Date();
+			datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
+			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+			String tiempoSQL = mapping.get(0).get("tiempo").toString();
+			formatter = new SimpleDateFormat(patronSQL);
+			
+			Date actual =  formatter.parse(tiempoSQL);
 			
 			if( actual.after(bloqueo) ) {
 				//resetear numBloqueo

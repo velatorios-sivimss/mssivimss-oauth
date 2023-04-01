@@ -58,6 +58,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
 		
+		contraNueva = passwordEncoder.encode(contraNueva);
 		exito = cuentaService.actualizarContra(login.getIdLogin(), login.getIdUsuario(), contraNueva);
 		
 		if (Boolean.FALSE.equals(exito)) {
@@ -191,7 +192,12 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 			calendar.add(Calendar.MINUTE , tiempoCodigo);
 			fechaCodigo = calendar.getTime();
 			
-			Date actual =  new Date();
+			datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
+			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+			String tiempoSQL = mapping.get(0).get("tiempo").toString();
+			formatter = new SimpleDateFormat(patronSQL);
+			
+			Date actual =  formatter.parse(tiempoSQL);
 			
 			if( actual.before(fechaCodigo) ) {
 				resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),

@@ -54,4 +54,12 @@ public class ParametrosUtil {
 		log.info( query.toString() );
 		return query.toString();
 	}
+	
+	public String obtenerFecha(String formato) {
+		StringBuilder query = new StringBuilder( "SELECT DATE_FORMAT(CURRENT_TIMESTAMP, '" );
+		query.append( formato );
+		query.append( "') AS tiempo" );
+		log.info( query.toString() );
+		return query.toString();
+	}
 }
