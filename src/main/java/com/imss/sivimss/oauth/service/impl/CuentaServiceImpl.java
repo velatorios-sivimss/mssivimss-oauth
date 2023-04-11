@@ -17,6 +17,7 @@ import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.model.Login;
 import com.imss.sivimss.oauth.service.CuentaService;
 import com.imss.sivimss.oauth.util.LoginUtil;
+import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
 
 @Service
@@ -41,8 +42,11 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		}else {
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
 			login = lista.get(0);
-			login.setFecCamContra( datos.get(0).get("FEC_CAMBIO_CONTRASENIA").toString() );
 			
+			if( datos.get(0).get("FEC_CAMBIO_CONTRASENIA") != null) {
+				login.setFecCamContra( datos.get(0).get("FEC_CAMBIO_CONTRASENIA").toString() );
+			}
+
 		}
 		
 		return login;
@@ -162,7 +166,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 				intentos = 0;
 				actualizaGenericoPorQuery( loginUtil.actNumIntentos(idLogin, 0, 1) );
 			}else {
-				throw new BadRequestException(HttpStatus.BAD_REQUEST, "Favor de Esperar " + tiempoBloqueo +" minutos");
+				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.INTENTOS_FALLIDOS.getValor());
 			}
 			
 		}

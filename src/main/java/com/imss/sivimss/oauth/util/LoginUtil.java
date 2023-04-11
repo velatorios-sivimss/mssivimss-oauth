@@ -120,7 +120,7 @@ public class LoginUtil {
 		
 		StringBuilder query = new StringBuilder(BdConstantes.UPDATE);
 		query.append( "SVT_LOGIN " );
-		query.append( "SET `CVE_CODIGO_SEGURIDAD` = " + codigo );
+		query.append( "SET `CVE_CODIGO_SEGURIDAD` = '" + codigo + "'" );
 		query.append( ", `FEC_CODIGO_SEGURIDAD` = NOW() " );
 		query.append( " WHERE (`ID_LOGIN` = '"+ idLogin +"') " );
 		log.info( query.toString() );

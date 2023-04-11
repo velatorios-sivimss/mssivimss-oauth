@@ -44,6 +44,8 @@ public class AppConstantes {
 	
 	public static final String CONTRASENIA_PROX_VENCER= "contraseniaProximaVencer";
 	
+	public static final String ID_DELEGACION= "idDelegacion";
+	
 	
 	private AppConstantes() {
 	    throw new IllegalStateException("AppConstantes class");

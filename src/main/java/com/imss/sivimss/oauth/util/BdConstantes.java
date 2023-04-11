@@ -22,6 +22,8 @@ public class BdConstantes {
 	public static final String ESTATUS_PRE_ACTIVO= "PRE ACTIVO";
 	public static final String ESTATUS_DESACTIVADO= "DESACTIVADA";
 	
+	public static final String TIP_PARAMETRO= "TIP_PARAMETRO";
+	
 	private BdConstantes() {
 	    throw new IllegalStateException("BdConstantes class");
 	  }

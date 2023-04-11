@@ -22,6 +22,7 @@ import com.imss.sivimss.oauth.model.request.EnvioCorreosRequest;
 import com.imss.sivimss.oauth.service.ContraseniaService;
 import com.imss.sivimss.oauth.service.CuentaService;
 import com.imss.sivimss.oauth.service.UsuarioService;
+import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
 import com.imss.sivimss.oauth.util.LoginUtil;
@@ -92,14 +93,14 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		datos = consultaGenericaPorQuery( parametrosUtil.numDias() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		sNumDias = mapping.get(0).get("TIP_PARAMETRO").toString();
+		sNumDias = mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString();
 		numDias = Integer.parseInt(sNumDias);
 		numDias = numDias * (-1);
 		
 		datos = consultaGenericaPorQuery( parametrosUtil.numMeses() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		sNumMeses = mapping.get(0).get("TIP_PARAMETRO").toString();
+		sNumMeses = mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString();
 		numMeses = Integer.parseInt(sNumMeses);
 		
 		formatter = new SimpleDateFormat(PATTERN);
@@ -111,6 +112,13 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		calendar.add(Calendar.DAY_OF_YEAR, numDias);
 		fechaProxVencer = calendar.getTime();
+		
+		datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
+		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+		String tiempoSQL = mapping.get(0).get("tiempo").toString();
+		formatter = new SimpleDateFormat(patronSQL);
+		
+		fechaActual =  formatter.parse(tiempoSQL);
 		
 		if( fechaActual.after(fechaProxVencer) && fechaActual.before(fechaVencida) ) {
 			estatus = EstatusVigenciaEnum.PROXIMA_VENCER.getId();
@@ -137,7 +145,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		datos = consultaGenericaPorQuery( parametrosUtil.longCodigo() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		longitud = Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		longitud = Integer.parseInt(mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString());
 		
 		codigo = loginUtil.generarCodigo(longitud);
 		
@@ -175,7 +183,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		datos = consultaGenericaPorQuery( parametrosUtil.tiempoCodigo() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString());
 		
 		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Codigo Incorrecto");

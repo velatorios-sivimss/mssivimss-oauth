@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface VelatorioService {
 
-	public List<Map<String, Object>> consulta() throws Exception;
+	public List<Map<String, Object>> consulta(String idVelatorio) throws Exception;
 	
 }
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imss.sivimss.oauth.service.DelegacionService;
+import com.imss.sivimss.oauth.service.CatalogosService;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.Response;
 
@@ -14,17 +14,17 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/delegacion")
-public class DelegacionController {
+@RequestMapping("/catalogos")
+public class CatalogosController {
 
 	@Autowired
-	private DelegacionService delegacionService;
+	private CatalogosService catalogosService;
 	
 	@PostMapping("/consulta")
 	public Response<Object> consultaListaGenerica() throws Exception {
 		
 		return new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
-				delegacionService.consulta() );
+				catalogosService.consulta() );
 
 	}
 

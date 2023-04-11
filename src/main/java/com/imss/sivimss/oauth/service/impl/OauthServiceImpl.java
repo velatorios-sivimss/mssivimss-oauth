@@ -13,6 +13,7 @@ import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
+import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imss.sivimss.oauth.beans.Usuario;
@@ -46,15 +47,16 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		Response<Object> resp;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
 		Map<String, Object> respuesta = new HashMap<>();
+		String mensaje = null;
 		
 		Login login = cuentaService.obtenerLoginPorIdUsuario( usuario.getIdUsuario() );
 		
 		Integer intentos = cuentaService.validaNumIntentos(login.getIdLogin(), login.getFecBloqueo(), login.getNumIntentos());
 		
-		if ( !passwordEncoder.matches( contrasenia, usuario.getPassword() ) ) {
+		if ( !passwordEncoder.matches( contrasenia, usuario.getPassword() ) && !contrasenia.equals( usuario.getPassword() ) ) {
 			intentos++;
 			cuentaService.actNumIntentos(login.getIdLogin(), intentos);
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Usuario o Contraseña incorrecta");
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CONTRASENIA_INCORRECTA.getValor());
 		}else {
 			cuentaService.actNumIntentos(login.getIdLogin(), 0);
 		}
@@ -63,7 +65,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 			
 			respuesta.put("preActivo", true);
 			
-			resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
+			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.USUARIO_PREACTIVO.getValor(),
 					respuesta );
 			
 			return resp;
@@ -72,7 +74,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 			
 			respuesta.put("desActivado", true);
 			
-			resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
+			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.ESTATUS_DESACTIVADO.getValor(),
 					respuesta );
 			
 			return resp;
@@ -86,11 +88,13 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		Integer estatusContra = contraseniaService.validarFecha( login.getFecCamContra() );
 		
 		if( estatusContra.equals( EstatusVigenciaEnum.VENCIDA.getId() ) ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Contraseña Vencida");
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CONTRASENIA_VENCIDA.getValor());
 		}else if ( estatusContra.equals( EstatusVigenciaEnum.PROXIMA_VENCER.getId() ) ) {
 			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, true);
+			mensaje = MensajeEnum.CONTRASENIA_PROXIMA_VENCER.getValor();
 		}else {
 			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, false);
+			mensaje = MensajeEnum.OK.getValor();
 		}
 		
 		
@@ -119,7 +123,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		String token = jwtProvider.createToken(json, tiempo);
 		respuesta.put("token ", token);
 		
-		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
+		resp =  new Response<>(false, HttpStatus.OK.value(), mensaje,
 				respuesta );
 		
 		return resp;

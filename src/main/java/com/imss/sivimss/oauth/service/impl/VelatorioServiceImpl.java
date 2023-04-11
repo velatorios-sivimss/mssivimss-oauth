@@ -3,29 +3,23 @@ package com.imss.sivimss.oauth.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.imss.sivimss.oauth.service.VelatorioService;
+import com.imss.sivimss.oauth.util.CatalogosUtil;
 
 @Service
 public class VelatorioServiceImpl extends UtileriaService implements VelatorioService {
-
-	private static final Logger log = LoggerFactory.getLogger(VelatorioServiceImpl.class);
 	
 	@Override
 	@Cacheable("velatorio-consulta")
-	public List<Map<String, Object>> consulta() throws Exception {
-		StringBuilder query = new StringBuilder("SELECT ID_VELATORIO AS idVelatorio, ");
-		query.append( "NOM_VELATORIO AS nomVelatorio " );
-		query.append( "FROM SVC_VELATORIO " );
-		query.append( "ORDER BY ID_VELATORIO ASC " );
-		log.info(query.toString());
+	public List<Map<String, Object>> consulta(String idVelatorio) throws Exception {
+		
+		CatalogosUtil catalogosUtil = new CatalogosUtil();
 		List<Map<String, Object>> resp;
 		
-		resp = consultaGenericaPorQuery( query.toString() );
+		resp = consultaGenericaPorQuery( catalogosUtil.velatorios(idVelatorio) );
 		
 		return resp;
 	}

@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 @Data
 public class EnvioCorreosRequest {
-    @JsonProperty
-private ArrayList<CorreoRequest> usuarios;
+    
+	@JsonProperty
+    private ArrayList<CorreoRequest> usuarios;
+
 }
 
