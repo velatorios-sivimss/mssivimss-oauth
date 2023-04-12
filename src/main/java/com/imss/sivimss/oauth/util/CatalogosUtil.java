@@ -35,7 +35,14 @@ public class CatalogosUtil {
 		StringBuilder query = new StringBuilder("SELECT ID_VELATORIO AS id, ");
 		query.append( "NOM_VELATORIO AS 'desc' " );
 		query.append( "FROM SVC_VELATORIO " );
-		query.append( "WHERE ID_DELEGACION = " +  idVelatorio);
+		query.append( "WHERE ID_DELEGACION ");
+		
+		if( idVelatorio==null || idVelatorio.equalsIgnoreCase("null")) {
+			query.append( " is null ");
+		}else {
+			query.append( " = " +  idVelatorio);
+		}
+		
 		query.append( " ORDER BY ID_VELATORIO ASC " );
 		log.info(query.toString());
 		

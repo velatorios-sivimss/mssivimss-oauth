@@ -27,7 +27,11 @@ public class VelatorioController {
 	@PostMapping("/consulta")
 	public Response<Object> consultaListaGenerica( @RequestBody Map<String, Object> datos ) throws Exception {
 		
-		String idDelegacion = datos.get(AppConstantes.ID_DELEGACION).toString();
+		String idDelegacion = null;
+		
+		if(datos.get(AppConstantes.ID_DELEGACION) != null ) {
+			idDelegacion = datos.get(AppConstantes.ID_DELEGACION).toString();
+		}
 		
 		return new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 				velatorioService.consulta( idDelegacion ) );
