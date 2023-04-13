@@ -30,6 +30,7 @@ public class Usuario {
 	private String idDelegacion;
 	private String curp;
 	private String claveUsuario;
+	private String estatus;
 	
 	public Usuario(Map<String, Object> datos) {
 		this.idUsuario = datos.get("ID_USUARIO").toString();
@@ -46,6 +47,7 @@ public class Usuario {
 		this.desRol = datos.get("DES_ROL").toString();
 		this.curp = datos.get("DES_CURP").toString();
 		this.claveUsuario = datos.get("CVE_USUARIO").toString();
+		this.estatus = datos.get("CVE_ESTATUS").toString();
 	}
 	
 	
@@ -56,8 +58,6 @@ public class Usuario {
 		query.append( BdConstantes.WHERE );
 		query.append( BdConstantes.CVE_MATRICULA + " = ");
 		query.append( "'" + user + "' " );
-		query.append( BdConstantes.AND );
-		query.append( "US." + BdConstantes.ACTIVO );
 		query.append( BdConstantes.LIMIT );
 		
 		return query.toString();

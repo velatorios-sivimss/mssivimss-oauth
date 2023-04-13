@@ -26,6 +26,7 @@ import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
 import com.imss.sivimss.oauth.util.LoginUtil;
+import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
 import com.imss.sivimss.oauth.util.ProviderServiceRestTemplate;
 import com.imss.sivimss.oauth.util.Response;
@@ -177,8 +178,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		List<Map<String, Object>> datos;
 		List<Map<String, Object>> mapping;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
-		Response<Object> resp = new Response<>(true, HttpStatus.BAD_REQUEST.value(), ConstantsMensajes.DENEGADO.getMensaje(),
-				"Datos Incorrectos" );
+		Response<Object> resp = null;
 		
 		datos = consultaGenericaPorQuery( parametrosUtil.tiempoCodigo() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
@@ -186,7 +186,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString());
 		
 		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Codigo Incorrecto");
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CODIGO_INCORRECTO.getValor());
 		}
 		
 		if( login.getFecCodSeguridad() != null && !login.getFecCodSeguridad().isEmpty() ) {
@@ -208,10 +208,10 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 			Date actual =  formatter.parse(tiempoSQL);
 			
 			if( actual.before(fechaCodigo) ) {
-				resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
-						"Codigo Valido" );
+				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_CORRECTO.getValor(),
+						null );
 			}else {
-				throw new BadRequestException(HttpStatus.UNAUTHORIZED, "Codigo expirado, favor de crear uno nuevo");
+				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CODIGO_EXPIRADO.getValor());
 			}
 		}
 		

@@ -10,7 +10,10 @@ public enum MensajeEnum {
 	INTENTOS_FALLIDOS("CANTIDAD_MAX_INTENTOS_FALLIDOS", "Se ha alcanzado el maximo de intentos fallidos, favor de esperar "),
 	CONTRASENIA_VENCIDA("FECHA_CONTRASENIA_VENCIDA", "La fecha del último cambio de contraseña es superior a 3 meses"),
 	USUARIO_PREACTIVO("USUARIO_PREACTIVO", "El usuario es Pre Activo"),
-	ESTATUS_DESACTIVADO("ESTATUS_DESACTIVADO", "El usuario ha sido Desactivado");
+	ESTATUS_DESACTIVADO("CUENTA_BLOQUEADA", "El usuario ha sido Desactivado"),
+	CODIGO_CORRECTO("CODIGO_CORRECTO", "El Codigo ingresado es Correcto"),
+	CODIGO_INCORRECTO("CODIGO_INCORRECTO", "El Codigo ingresado es Incorrecto"),
+	CODIGO_EXPIRADO("CODIGO_EXPIRADO", "El Codigo ingresado esta expirado");
 	
 	String valor;
 	String desc;
