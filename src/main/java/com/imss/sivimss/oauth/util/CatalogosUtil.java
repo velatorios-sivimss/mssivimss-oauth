@@ -30,17 +30,15 @@ public class CatalogosUtil {
 		return query.toString();
 	}
 	
-	public String velatorios(String idVelatorio) {
+	public String velatorios(String idDelegacion) {
 		
 		StringBuilder query = new StringBuilder("SELECT ID_VELATORIO AS id, ");
 		query.append( "NOM_VELATORIO AS 'desc' " );
 		query.append( "FROM SVC_VELATORIO " );
-		query.append( "WHERE ID_DELEGACION ");
 		
-		if( idVelatorio==null || idVelatorio.equalsIgnoreCase("null")) {
-			query.append( " is null ");
-		}else {
-			query.append( " = " +  idVelatorio);
+		if( idDelegacion!=null && !idDelegacion.equalsIgnoreCase("null")) {
+			query.append( "WHERE ");
+			query.append( "ID_DELEGACION = " +  idDelegacion);
 		}
 		
 		query.append( " ORDER BY ID_VELATORIO ASC " );

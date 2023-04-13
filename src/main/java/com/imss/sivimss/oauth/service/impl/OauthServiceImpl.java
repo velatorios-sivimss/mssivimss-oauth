@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
-import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
 import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
@@ -63,16 +61,12 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		
 		if( login.getEstatusCuenta().equalsIgnoreCase( BdConstantes.ESTATUS_PRE_ACTIVO ) ) {
 			
-			respuesta.put("preActivo", true);
-			
 			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.USUARIO_PREACTIVO.getValor(),
-					respuesta );
+					null );
 			
 			return resp;
 			
 		}else if ( login.getEstatusCuenta().equalsIgnoreCase( BdConstantes.ESTATUS_DESACTIVADO ) ) {
-			
-			respuesta.put("desActivado", true);
 			
 			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.ESTATUS_DESACTIVADO.getValor(),
 					respuesta );
@@ -90,10 +84,8 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		if( estatusContra.equals( EstatusVigenciaEnum.VENCIDA.getId() ) ) {
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CONTRASENIA_VENCIDA.getValor());
 		}else if ( estatusContra.equals( EstatusVigenciaEnum.PROXIMA_VENCER.getId() ) ) {
-			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, true);
 			mensaje = MensajeEnum.CONTRASENIA_PROXIMA_VENCER.getValor();
 		}else {
-			respuesta.put(AppConstantes.CONTRASENIA_PROX_VENCER, false);
 			mensaje = MensajeEnum.OK.getValor();
 		}
 		

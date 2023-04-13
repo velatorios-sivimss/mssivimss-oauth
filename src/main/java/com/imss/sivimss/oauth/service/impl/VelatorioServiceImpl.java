@@ -14,12 +14,12 @@ public class VelatorioServiceImpl extends UtileriaService implements VelatorioSe
 	
 	@Override
 	@Cacheable("velatorio-consulta")
-	public List<Map<String, Object>> consulta(String idVelatorio) throws Exception {
+	public List<Map<String, Object>> consulta(String idDelegacion) throws Exception {
 		
 		CatalogosUtil catalogosUtil = new CatalogosUtil();
 		List<Map<String, Object>> resp;
 		
-		resp = consultaGenericaPorQuery( catalogosUtil.velatorios(idVelatorio) );
+		resp = consultaGenericaPorQuery( catalogosUtil.velatorios(idDelegacion) );
 		
 		return resp;
 	}
