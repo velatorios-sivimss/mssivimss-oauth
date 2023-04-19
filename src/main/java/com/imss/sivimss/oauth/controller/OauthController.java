@@ -46,7 +46,7 @@ public class OauthController {
 	}
 	
 	@PostMapping("mensajes")
-	public Response<?> mensajes(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<?> mensajes() throws Exception {
 		
 		return menuService.mensajes();
       
