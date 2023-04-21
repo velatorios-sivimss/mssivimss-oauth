@@ -13,7 +13,9 @@ public enum MensajeEnum {
 	ESTATUS_DESACTIVADO("CUENTA_BLOQUEADA", "El usuario ha sido Desactivado"),
 	CODIGO_CORRECTO("CODIGO_CORRECTO", "El Codigo ingresado es Correcto"),
 	CODIGO_INCORRECTO("CODIGO_INCORRECTO", "El Codigo ingresado es Incorrecto"),
-	CODIGO_EXPIRADO("CODIGO_EXPIRADO", "El Codigo ingresado esta expirado");
+	CODIGO_EXPIRADO("CODIGO_EXPIRADO", "El Codigo ingresado esta expirado"),
+	SIAP_DESACTIVADO("SIAP_DESACTIVADO", "El usuario esta Desactivado en el SIAP"),
+	SIAP_SIN_CONEXION("SIAP_SIN_CONEXION", "No hay conexion con el SIAP");
 	
 	String valor;
 	String desc;

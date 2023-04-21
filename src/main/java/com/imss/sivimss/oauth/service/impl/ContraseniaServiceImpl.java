@@ -28,7 +28,6 @@ import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
 import com.imss.sivimss.oauth.util.LoginUtil;
 import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
-import com.imss.sivimss.oauth.util.ProviderServiceRestTemplate;
 import com.imss.sivimss.oauth.util.Response;
 
 @Service
@@ -42,9 +41,6 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	
 	@Autowired
 	private UsuarioService usuarioService;
-	
-	@Autowired
-	private ProviderServiceRestTemplate providerRestTemplate;
 	
 	private static final Logger log = LoggerFactory.getLogger(ContraseniaServiceImpl.class);
 	

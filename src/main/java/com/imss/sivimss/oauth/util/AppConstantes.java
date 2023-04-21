@@ -46,6 +46,9 @@ public class AppConstantes {
 	
 	public static final String ID_DELEGACION= "idDelegacion";
 	
+	public static final String SIAP_ACTIVO= "ACTIVO";
+	
+	
 	
 	private AppConstantes() {
 	    throw new IllegalStateException("AppConstantes class");

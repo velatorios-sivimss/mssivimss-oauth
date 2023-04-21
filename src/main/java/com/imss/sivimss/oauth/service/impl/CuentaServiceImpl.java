@@ -10,12 +10,14 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.model.Login;
 import com.imss.sivimss.oauth.service.CuentaService;
+import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.LoginUtil;
 import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
@@ -23,7 +25,13 @@ import com.imss.sivimss.oauth.util.ParametrosUtil;
 @Service
 public class CuentaServiceImpl extends UtileriaService implements CuentaService {
 
+	@Value("${endpoints.consulta-siap}")
+	private String urlConsultaSiap;
+	
 	private static final Logger log = LoggerFactory.getLogger(CuentaServiceImpl.class);
+	
+	private static final String TIP_PARAMETRO = "TIP_PARAMETRO";
+	private static final String FEC_CAMBIO_CONTRASENIA = "FEC_CAMBIO_CONTRASENIA";
 	
 	@Override
 	public Login obtenerLoginPorIdUsuario(String idUsuario) throws Exception {
@@ -43,8 +51,8 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
 			login = lista.get(0);
 			
-			if( datos.get(0).get("FEC_CAMBIO_CONTRASENIA") != null) {
-				login.setFecCamContra( datos.get(0).get("FEC_CAMBIO_CONTRASENIA").toString() );
+			if( datos.get(0).get(FEC_CAMBIO_CONTRASENIA) != null) {
+				login.setFecCamContra( datos.get(0).get(FEC_CAMBIO_CONTRASENIA).toString() );
 			}
 
 		}
@@ -68,8 +76,8 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
 			login = lista.get(0);
 			
-			if( datos.get(0).get("FEC_CAMBIO_CONTRASENIA") != null ) {
-				login.setFecCamContra( datos.get(0).get("FEC_CAMBIO_CONTRASENIA").toString() );
+			if( datos.get(0).get(FEC_CAMBIO_CONTRASENIA) != null ) {
+				login.setFecCamContra( datos.get(0).get(FEC_CAMBIO_CONTRASENIA).toString() );
 			}
 			
 			if( datos.get(0).get("CVE_CODIGO_SEGURIDAD") != null ) {
@@ -105,18 +113,18 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		List<Map<String, Object>> mapping;
 		String estatusSiap = "";
 		
-		datos = consultaGenericaPorQuery( parametrosUtil.tiempoToken() );
+		datos = consultaGenericaPorQuery( parametrosUtil.consultarSiap() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		String siap = mapping.get(0).get("TIP_PARAMETRO").toString();
+		String siap = mapping.get(0).get(TIP_PARAMETRO).toString();
 		
 		if( siap.equalsIgnoreCase("true") ) {
 			log.info( "Se debe consultar el SIAP" );
-			estatusSiap = "Activo";
+			estatusSiap = consultaSiap(cveUsuario);
 		}
 		
-		if( siap.equalsIgnoreCase("true") && !estatusSiap.equalsIgnoreCase("Activo") ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Usuario " + cveUsuario +" no Existe en SIAP");
+		if( siap.equalsIgnoreCase("true") && !estatusSiap.equalsIgnoreCase(AppConstantes.SIAP_ACTIVO) ) {
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_DESACTIVADO.getValor());
 		}
 		
 	}
@@ -141,7 +149,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		
 		datos = consultaGenericaPorQuery( parametrosUtil.tiempoBloqueo() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
-		tiempoBloqueo =  Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		tiempoBloqueo =  Integer.parseInt(mapping.get(0).get(TIP_PARAMETRO).toString());
 		
 		if( fechaBloqueo!=null && !fechaBloqueo.isEmpty() ) {
 			
@@ -185,9 +193,23 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		datos = consultaGenericaPorQuery( parametrosUtil.numIntentos() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
-		maxNumIntentos = Integer.parseInt(mapping.get(0).get("TIP_PARAMETRO").toString());
+		maxNumIntentos = Integer.parseInt(mapping.get(0).get(TIP_PARAMETRO).toString());
 		
 		return maxNumIntentos;
+	}
+	
+	private String consultaSiap(String matricula) throws Exception {
+		String status;
+		Map<String, Object> resp;
+		String url = urlConsultaSiap + matricula;
+		
+		log.info( "Url SIAP: {}",  url);
+		
+		//Hacemos el consumo para consultar el SIAP
+		resp = providerRestTemplate.consumirServicioGet(url);
+		status = (String) resp.get("status");
+		
+		return status;
 	}
 
 }

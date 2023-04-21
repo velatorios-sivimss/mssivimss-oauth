@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.imss.sivimss.oauth.config.mymapper.Consultas;
 import com.imss.sivimss.oauth.config.mymapper.IdDto;
 import com.imss.sivimss.oauth.util.Database;
+import com.imss.sivimss.oauth.util.ProviderServiceRestTemplate;
 import com.imss.sivimss.oauth.config.MyBatisConnect;
 import com.imss.sivimss.oauth.security.JwtProvider;
 
@@ -39,6 +40,9 @@ public class UtileriaService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@Autowired
+	ProviderServiceRestTemplate providerRestTemplate;
+	
 	@Value("${formato_fecha_hora}") 
 	String formatoSQL;
 	
