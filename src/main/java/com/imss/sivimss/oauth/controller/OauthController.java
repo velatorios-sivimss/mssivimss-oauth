@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/v1/")
 public class OauthController {
 
 	@Autowired

@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/contrasenia")
+@RequestMapping("/v1/contrasenia")
 public class ContraseniaController {
 	
 	@Autowired
@@ -25,9 +25,9 @@ public class ContraseniaController {
 	@PostMapping("/cambiar")
 	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
-		String user = datos.get(AppConstantes.USUARIO).toString() ;
-		String contraseniaAnterior = datos.get(AppConstantes.CONTRASENIA_ANTERIOR).toString() ;
-		String contraseniaNueva = datos.get(AppConstantes.CONTRASENIA_NUEVA).toString() ;
+		String user = datos.get(AppConstantes.USUARIO).toString();
+		String contraseniaAnterior = datos.get(AppConstantes.CONTRASENIA_ANTERIOR).toString();
+		String contraseniaNueva = datos.get(AppConstantes.CONTRASENIA_NUEVA).toString();
 		
 		return contraseniaService.cambiar(user, contraseniaAnterior, contraseniaNueva);
       
@@ -36,7 +36,7 @@ public class ContraseniaController {
 	@PostMapping("/genera-codigo")
 	public Response<?> generarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
-		String user = datos.get(AppConstantes.USUARIO).toString() ;
+		String user = datos.get(AppConstantes.USUARIO).toString();
 		
 		return contraseniaService.generarCodigo( user );
       
@@ -45,8 +45,8 @@ public class ContraseniaController {
 	@PostMapping("/valida-codigo")
 	public Response<?> validarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
-		String user = datos.get(AppConstantes.USUARIO).toString() ;
-		String codigo = datos.get(AppConstantes.CODIGO).toString() ;
+		String user = datos.get(AppConstantes.USUARIO).toString();
+		String codigo = datos.get(AppConstantes.CODIGO).toString();
 		
 		return contraseniaService.validarCodigo( user, codigo );
       

@@ -12,7 +12,7 @@ public class BdConstantes {
 	public static final String SELECT_USUARIOS = "SELECT * FROM SVT_USUARIOS US ";
 	public static final String WHERE = "WHERE ";
 	public static final String AND = "AND ";
-	public static final String CVE_MATRICULA= "CVE_MATRICULA";
+	public static final String CVE_USUARIO= "CVE_USUARIO";
 	public static final String ACTIVO= "CVE_ESTATUS = '1' ";
 	public static final String LIMIT= "LIMIT 1 ";
 	public static final String SELECT= "SELECT ";

@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/catalogos")
+@RequestMapping("/v1/catalogos")
 public class CatalogosController {
 
 	@Autowired

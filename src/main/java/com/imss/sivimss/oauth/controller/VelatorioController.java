@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/velatorio")
+@RequestMapping("/v1/velatorio")
 public class VelatorioController {
 
 	@Autowired

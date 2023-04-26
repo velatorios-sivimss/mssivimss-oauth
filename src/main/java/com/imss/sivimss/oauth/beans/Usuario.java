@@ -56,7 +56,7 @@ public class Usuario {
 		StringBuilder query = new StringBuilder(BdConstantes.SELECT_USUARIOS);
 		query.append( "INNER JOIN SVC_ROL ROL ON ROL.ID_ROL = US.ID_ROL " );
 		query.append( BdConstantes.WHERE );
-		query.append( BdConstantes.CVE_MATRICULA + " = ");
+		query.append( BdConstantes.CVE_USUARIO + " = ");
 		query.append( "'" + user + "' " );
 		query.append( BdConstantes.LIMIT );
 		

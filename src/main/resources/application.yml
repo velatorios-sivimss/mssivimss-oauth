@@ -91,3 +91,4 @@ resilience4j.timelimiter:
 formato_fecha: '%d/%m/%Y'
 formato_fecha_hora: '%d/%m/%Y %H:%i:%s'
 patron_formato_fecha_hora: 'dd/MM/yyyy HH:mm:ss'
+ruta-log: 'C:\Users\iceballos\Documents\logs'
