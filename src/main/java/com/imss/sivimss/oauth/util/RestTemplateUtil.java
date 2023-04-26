@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.imss.sivimss.oauth.exception.BadRequestException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -68,29 +71,17 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArrayToken(String url, EnviarDatosRequest body, String subject,
+	public Response<?> sendPostRequestByteArrayToken(String url, Object body, String subject,
 			Class<?> clazz) throws IOException {
 		Response<?> responseBody = new Response<>();
 		HttpHeaders headers = RestTemplateUtil.createHttpHeadersToken(subject);
 
 		HttpEntity<Object> request = new HttpEntity<>(body, headers);
 		ResponseEntity<?> responseEntity = null;
-		try {
-			responseEntity = restTemplate.postForEntity(url, request, clazz);
-			if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
-				// noinspection unchecked
-				responseBody = (Response<List<String>>) responseEntity.getBody();
-			} else {
-				throw new IOException("Ha ocurrido un error al enviar");
-			}
-		} catch (IOException ioException) {
-			throw ioException;
-		} catch (Exception e) {
-			log.error("Fallo al consumir el servicio, {}", e.getMessage());
-			responseBody.setCodigo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			responseBody.setError(true);
-			responseBody.setMensaje(e.getMessage());
-		}
+
+		responseEntity = restTemplate.postForEntity(url, request, clazz);
+
+		responseBody = (Response<List<String>>) responseEntity.getBody();
 
 		return responseBody;
 	}
@@ -200,22 +191,31 @@ public class RestTemplateUtil {
 
 		HttpEntity<Object> request = new HttpEntity<>(body, headers);
 		ResponseEntity<?> responseEntity = null;
-		try {
-			responseEntity = restTemplate.postForEntity(url, request, clazz);
-			if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
-				responseBody = (Response<List<String>>) responseEntity.getBody();
-			} else {
-				throw new IOException("Ha ocurrido un error al enviar");
-			}
-		} catch (IOException ioException) {
-			throw ioException;
-		} catch (Exception e) {
-			log.error("Fallo al consumir el servicio, {}", e.getMessage());
-			responseBody.setCodigo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			responseBody.setError(true);
-			responseBody.setMensaje(e.getMessage());
-		}
+		responseEntity = restTemplate.postForEntity(url, request, clazz);
+		responseBody = (Response<List<String>>) responseEntity.getBody();
 
+		return responseBody;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> sendGet(String url, Class<?> clazz) throws Exception {
+		Map<String, Object> responseBody;
+
+		ResponseEntity<?> responseEntity = null;
+		
+		try {
+			responseEntity = restTemplate.getForEntity(url, clazz);
+		}catch (Exception e) {
+			
+			if(e.getMessage().contains("I/O error")) {
+				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_SIN_CONEXION.getValor());
+			}else {
+				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_DESACTIVADO.getValor());
+			}	
+		}
+		
+		responseBody = (Map<String, Object>) responseEntity.getBody();
+		
 		return responseBody;
 	}
 }

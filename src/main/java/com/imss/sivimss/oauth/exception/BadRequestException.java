@@ -1,7 +1,5 @@
 package com.imss.sivimss.oauth.exception;
 
-import java.util.Arrays;
-
 import org.springframework.http.HttpStatus;
 
 /**

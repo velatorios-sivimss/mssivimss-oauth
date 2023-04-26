@@ -1,14 +1,8 @@
 package com.imss.sivimss.oauth.beans;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.DatatypeConverter;
-
-import com.imss.sivimss.oauth.util.AppConstantes;
-import com.imss.sivimss.oauth.util.DatosRequest;
-import com.imss.sivimss.oauth.util.QueryHelper;
-
+import com.imss.sivimss.oauth.util.BdConstantes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,163 +15,52 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Usuario {
-	private Integer id;
+	private String idUsuario;
 	private String materno;
 	private String nombre;
 	private String correo;
-	private String curp;
-	private String claveUsuario;
 	private String claveMatricula;
 	private String password;
 	private String paterno;
-	private Integer idOficina;
-	private Integer idVelatorio;
-	private Integer idRol;
-	private Integer idDelegacion;
-	private String claveAlta;
-	private String claveModifica;
-	private String claveBaja;
-
-	/*
-	public Usuario(UsuarioRequest usuarioRequest) {
-		this.id = usuarioRequest.getId();
-		this.nombre = usuarioRequest.getNombre();
-		this.paterno = usuarioRequest.getPaterno();
-		this.materno = usuarioRequest.getMaterno();
-		this.curp = usuarioRequest.getCurp();
-		this.correo = usuarioRequest.getCorreo();
-		this.password = usuarioRequest.getPassword();
-		this.claveUsuario = usuarioRequest.getClaveUsuario();
-		this.claveMatricula = usuarioRequest.getClaveMatricula();
-		this.idOficina = usuarioRequest.getIdOficina();
-		this.idVelatorio = usuarioRequest.getIdVelatorio();
-		this.idRol = usuarioRequest.getIdRol();
-		this.idDelegacion = usuarioRequest.getIdDelegacion();
-	}
-	*/
+	private String statusCuenta;
+	private String idOficina;
+	private String idVelatorio;
+	private String idRol;
+	private String desRol;
+	private String idDelegacion;
+	private String curp;
+	private String claveUsuario;
+	private String estatus;
 	
-
-	public DatosRequest insertar() {
-		DatosRequest request = new DatosRequest();
-		Map<String, Object> parametro = new HashMap<>();
-
-		final QueryHelper q = new QueryHelper("INSERT INTO SVT_USUARIOS");
-		q.agregarParametroValues("DES_CURP", "'" + this.curp + "'");
-		q.agregarParametroValues("CVE_MATRICULA", "'" + this.claveUsuario + "'");
-		q.agregarParametroValues("CVE_USUARIO", "'" + this.claveUsuario + "'");
-		q.agregarParametroValues("NOM_USUARIO", "'" + this.nombre + "'");
-		q.agregarParametroValues("NOM_APELLIDO_PATERNO", "'" + this.paterno + "'");
-		q.agregarParametroValues("NOM_APELLIDO_MATERNO", "'" + this.materno + "'");
-		q.agregarParametroValues("FEC_NACIMIENTO", "NULL");
-		q.agregarParametroValues("DES_CORREOE", "'" + this.correo + "'");
-		q.agregarParametroValues("ID_OFICINA", "" + this.idOficina + "");
-		q.agregarParametroValues("ID_DELEGACION", "" + this.idDelegacion + "");
-		q.agregarParametroValues("ID_VELATORIO", "" + this.idVelatorio + "");
-		q.agregarParametroValues("ID_ROL", "" + this.idRol + "");
-		q.agregarParametroValues("CVE_ESTATUS", "1");
-		q.agregarParametroValues("CVE_CONTRASENIA", "'" + this.password + "'");
-		q.agregarParametroValues("FEC_ALTA", "NOW()");
-		q.agregarParametroValues("CVE_MATRICULA_ALTA", "'" + this.claveAlta + "'");
-		q.agregarParametroValues("FEC_ACTUALIZACION", "NULL");
-		q.agregarParametroValues("FEC_BAJA", "NULL");
-		q.agregarParametroValues("CVE_MATRICULA_MODIFICA", "NULL");
-		q.agregarParametroValues("CVE_MATRICULA_BAJA", "NULL");
-		String query = q.obtenerQueryInsertar();
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		parametro.put(AppConstantes.QUERY, encoded);
-		request.setDatos(parametro);
-
-		return request;
+	public Usuario(Map<String, Object> datos) {
+		this.idUsuario = datos.get("ID_USUARIO").toString();
+		this.nombre = datos.get("NOM_USUARIO").toString();
+		this.paterno = datos.get("NOM_APELLIDO_PATERNO").toString();
+		this.materno = datos.get("NOM_APELLIDO_MATERNO").toString();
+		this.correo = datos.get("DES_CORREOE").toString();
+		this.password = datos.get("CVE_CONTRASENIA").toString();
+		this.claveMatricula = datos.get("CVE_MATRICULA").toString();
+		this.idOficina = datos.get("ID_OFICINA").toString();
+		this.idDelegacion = datos.get("ID_DELEGACION").toString();
+		this.idVelatorio = datos.get("ID_VELATORIO").toString();
+		this.idRol = datos.get("ID_ROL").toString();
+		this.desRol = datos.get("DES_ROL").toString();
+		this.curp = datos.get("DES_CURP").toString();
+		this.claveUsuario = datos.get("CVE_USUARIO").toString();
+		this.estatus = datos.get("CVE_ESTATUS").toString();
 	}
-
-	public DatosRequest actualizar() {
-		DatosRequest request = new DatosRequest();
-		Map<String, Object> parametro = new HashMap<>();
-
-		final QueryHelper q = new QueryHelper("UPDATE SVT_USUARIOS");
-		q.agregarParametroValues("DES_CURP", "'" + this.curp + "'");
-		q.agregarParametroValues("NOM_USUARIO", "'" + this.nombre + "'");
-		q.agregarParametroValues("NOM_APELLIDO_PATERNO", "'" + this.paterno + "'");
-		q.agregarParametroValues("NOM_APELLIDO_MATERNO", "'" + this.materno + "'");
-		q.agregarParametroValues("DES_CORREOE", "'" + this.correo + "'");
-		q.agregarParametroValues("ID_OFICINA", "" + this.idOficina + "");
-		q.agregarParametroValues("ID_DELEGACION", "" + this.idDelegacion + "");
-		q.agregarParametroValues("ID_VELATORIO", "" + this.idVelatorio + "");
-		q.agregarParametroValues("ID_ROL", "" + this.idRol + "");
-		q.agregarParametroValues("CVE_MATRICULA_MODIFICA", "'" + this.claveModifica + "'");
-		q.agregarParametroValues("FEC_ACTUALIZACION", "NOW()");
-		q.addWhere("ID_USUARIO = " + this.id);
-		String query = q.obtenerQueryActualizar();
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		parametro.put(AppConstantes.QUERY, encoded);
-		request.setDatos(parametro);
-		return request;
-	}
-
-	public DatosRequest cambiarEstatus() {
-		DatosRequest request = new DatosRequest();
-		Map<String, Object> parametro = new HashMap<>();
-		String query = "UPDATE SVT_USUARIOS SET CVE_ESTATUS=!CVE_ESTATUS , FEC_BAJA=NOW(), CVE_MATRICULA_BAJA='"
-				+ this.claveBaja + "' WHERE ID_USUARIO=" + this.id + ";";
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		parametro.put(AppConstantes.QUERY, encoded);
-		request.setDatos(parametro);
-		return request;
-	}
-
-	public DatosRequest obtenerUsuarios(DatosRequest request) {
+	
+	
+	public String buscarUsuario(String user) {
 		
-		String query = "SELECT * FROM SVT_USUARIOS ORDER BY ID_USUARIO DESC";	
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		request.getDatos().put(AppConstantes.QUERY, encoded);
-
-		return request;
-	}
-
-	public DatosRequest buscarUsuario(DatosRequest request) {
-		String palabra = request.getDatos().get("palabra").toString();
-		String query = "SELECT ID_USUARIO as id, DES_CURP as curp, CVE_MATRICULA as matricula, CONCAT(NOM_USUARIO,' ',NOM_APELLIDO_PATERNO,' ' ,NOM_APELLIDO_MATERNO) as nombre, DES_CORREOE as correo, CVE_ESTATUS as estatus \r\n"
-				+ " FROM SVT_USUARIOS WHERE NOM_USUARIO = '" + palabra + "' ORDER BY ID_USUARIO DESC";
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		request.getDatos().remove("palabra");
-		request.getDatos().put(AppConstantes.QUERY, encoded);
-		return request;
-	}
-
-	public DatosRequest detalleUsuario(DatosRequest request) {
-		String idUsuario = request.getDatos().get("id").toString();
-		String query = "SELECT ID_USUARIO as id, DES_CURP as curp, CVE_MATRICULA as matricula, CONCAT(NOM_USUARIO,' ',NOM_APELLIDO_PATERNO,' ' ,NOM_APELLIDO_MATERNO) as nombre, DES_CORREOE as correo, CVE_ESTATUS as estatus \r\n"
-				+ " FROM SVT_USUARIOS WHERE ID_USUARIO = " + Integer.parseInt(idUsuario) + " ORDER BY ID_USUARIO DESC";
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		request.getDatos().remove("id");
-		request.getDatos().put(AppConstantes.QUERY, encoded);
-		return request;
-	}
-
-	public DatosRequest catalogoUsuario() {
-		DatosRequest request = new DatosRequest();
-		Map<String, Object> parametro = new HashMap<>();
-		String query = "SELECT * FROM SVT_USUARIOS";
-		String encoded = DatatypeConverter.printBase64Binary(query.getBytes());
-		parametro.put(AppConstantes.QUERY, encoded);
-		request.setDatos(parametro);
-		return request;
-	}
-	
-	/*
-	public Map<String, Object> generarReporte(ReporteDto reporteDto){
-		Map<String, Object> envioDatos = new HashMap<>();
-		envioDatos.put("logoImss", "");
-		envioDatos.put("logoSistema", "");
-		envioDatos.put("ooad", reporteDto.getOoad());
-		envioDatos.put("idOoad", reporteDto.getIdOoad());
-		envioDatos.put("mes", reporteDto.getMes());
-		envioDatos.put("anio", reporteDto.getAnio());
-		envioDatos.put("nombreMes", reporteDto.getNombreMes());
+		StringBuilder query = new StringBuilder(BdConstantes.SELECT_USUARIOS);
+		query.append( "INNER JOIN SVC_ROL ROL ON ROL.ID_ROL = US.ID_ROL " );
+		query.append( BdConstantes.WHERE );
+		query.append( BdConstantes.CVE_USUARIO + " = ");
+		query.append( "'" + user + "' " );
+		query.append( BdConstantes.LIMIT );
 		
-		return envioDatos;
+		return query.toString();
 	}
-	*/
-	
 	
 }

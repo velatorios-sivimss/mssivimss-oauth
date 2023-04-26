@@ -81,7 +81,7 @@ public class AppExceptionHandler {
 	 */
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<ErrorsMessageResponse>manejadorResourceNotFoundException(BadRequestException exception,WebRequest webRequest){
-		ErrorsMessageResponse errorDetalles= new ErrorsMessageResponse(new Date(),HttpStatus.BAD_REQUEST.value(),exception.getMessage(),webRequest.getDescription(false));
+		ErrorsMessageResponse errorDetalles= new ErrorsMessageResponse(new Date(),HttpStatus.BAD_REQUEST.value(),exception.getMessage(),null);
 		return new ResponseEntity<>(errorDetalles,HttpStatus.BAD_REQUEST);
 	}
 	

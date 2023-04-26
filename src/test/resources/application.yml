@@ -1,5 +1,5 @@
 server:
-  port: 8079
+  port: 8080
   servlet:
     contextPath: /mssivimss-oauth
 
@@ -48,9 +48,9 @@ logging:
     org.hibernate: error
 
 endpoints:
-   dominio-consulta: http://localhost:8090/mssivimss-mod-catalogos
-   envio-correo: http://localhost:8091/mssivimss-envio-correos/envioDeCorreos/envio
-   consulta-siap: http://serviciosdigitalesinterno-stage.imss.gob.mx/serviciosDigitales-rest/v1/externos/siap/matricula/
+   dominio-consulta: http://localhost:1080/mssivimss-mod-catalogos
+   envio-correo: http://localhost:1080/mssivimss-envio-correos/envioDeCorreos/envio
+
 jwt:
   secretkey: funcionamuybienlogin
   secretkey-flujo: funcionamuybien
@@ -91,4 +91,3 @@ resilience4j.timelimiter:
 formato_fecha: '%d/%m/%Y'
 formato_fecha_hora: '%d/%m/%Y %H:%i:%s'
 patron_formato_fecha_hora: 'dd/MM/yyyy HH:mm:ss'
-ruta-log: 'C:\Users\iceballos\Documents\logs'

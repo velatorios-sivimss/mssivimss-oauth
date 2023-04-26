@@ -32,6 +32,24 @@ public class AppConstantes {
 	public static final String SIGNATUREEXCEPTION_MENSAJE  = "Fallo la firma.";
 	public static final String FORBIDDENEXCEPTION_MENSAJE  = "No tiene autorización para realizar la solicitud.";
 
+	public static final String USUARIO= "usuario";
+	public static final String CONTRASENIA= "contrasenia";
+	public static final String CONTRASENIA_ANTERIOR= "contraseniaAnterior";
+	public static final String CONTRASENIA_NUEVA= "contraseniaNueva";
+	public static final String CODIGO= "codigo";
+
+	public static final String CIRCUITBREAKER = "El servicio no responde, no permite más llamadas.";
+	
+	public static final String IDROL = "idRol";
+	
+	public static final String CONTRASENIA_PROX_VENCER= "contraseniaProximaVencer";
+	
+	public static final String ID_DELEGACION= "idDelegacion";
+	
+	public static final String SIAP_ACTIVO= "ACTIVO";
+	
+	
+	
 	private AppConstantes() {
 	    throw new IllegalStateException("AppConstantes class");
 	  }
