@@ -30,7 +30,7 @@ public class Usuario {
 	private String idDelegacion;
 	private String curp;
 	private String claveUsuario;
-	private String estatus;
+	private String activo;
 	
 	public Usuario(Map<String, Object> datos) {
 		this.idUsuario = datos.get("ID_USUARIO").toString();
@@ -47,7 +47,7 @@ public class Usuario {
 		this.desRol = datos.get("DES_ROL").toString();
 		this.curp = datos.get("DES_CURP").toString();
 		this.claveUsuario = datos.get("CVE_USUARIO").toString();
-		this.estatus = datos.get("CVE_ESTATUS").toString();
+		this.activo = datos.get("IND_ACTIVO").toString();
 	}
 	
 	

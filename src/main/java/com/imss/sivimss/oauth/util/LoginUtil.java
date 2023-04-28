@@ -7,9 +7,6 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.imss.sivimss.oauth.model.request.CorreoRequest;
-import com.imss.sivimss.oauth.model.request.EnvioCorreosRequest;
-
 public class LoginUtil {
 
 	private Logger log = LoggerFactory.getLogger(LoginUtil.class);
@@ -125,17 +122,6 @@ public class LoginUtil {
 		query.append( " WHERE (`ID_LOGIN` = '"+ idLogin +"') " );
 		log.info( query.toString() );
 		return query.toString();
-		
-	}
-	
-	public EnvioCorreosRequest cuerpoCorreo(String nombre, String email, String codigo){
-		
-		EnvioCorreosRequest envioCorreosRequest = new EnvioCorreosRequest();
-		CorreoRequest correo = new CorreoRequest(nombre, email, codigo);
-		ArrayList<CorreoRequest> lista = new ArrayList<>();
-		lista.add(correo);
-		envioCorreosRequest.setUsuarios(lista);		
-		return envioCorreosRequest;
 		
 	}
 	

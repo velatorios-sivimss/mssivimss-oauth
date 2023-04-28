@@ -47,7 +47,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		Map<String, Object> respuesta = new HashMap<>();
 		String mensaje = null;
 		
-		if( usuario.getEstatus().equals("false") ) {
+		if( usuario.getActivo().equals("false") ) {
 			resp =  new Response<>(false, HttpStatus.CREATED.value(), MensajeEnum.ESTATUS_DESACTIVADO.getValor(),
 					null );
 			return resp;
