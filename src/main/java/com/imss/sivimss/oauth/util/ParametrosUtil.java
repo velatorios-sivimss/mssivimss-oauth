@@ -8,7 +8,7 @@ public class ParametrosUtil {
 	private Logger log = LoggerFactory.getLogger(ParametrosUtil.class);
 	
 	private static final String QUERY_INICIO = "SELECT TIP_PARAMETRO FROM SVC_PARAMETRO_SISTEMA WHERE DES_PARAMETRO = ";
-	private static final String QUERY_FINAL = " AND CVE_ESTATUS = '1' LIMIT 1";
+	private static final String QUERY_FINAL = " AND IND_ACTIVO = '1' LIMIT 1";
 	
 	public String tiempoToken() {
 		return armarQuery("TIEMPO TOKEN");

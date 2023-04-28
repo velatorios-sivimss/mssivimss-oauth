@@ -18,10 +18,11 @@ import org.springframework.stereotype.Service;
 import com.imss.sivimss.oauth.beans.Usuario;
 import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.model.Login;
-import com.imss.sivimss.oauth.model.request.EnvioCorreosRequest;
+import com.imss.sivimss.oauth.model.request.CorreoRequest;
 import com.imss.sivimss.oauth.service.ContraseniaService;
 import com.imss.sivimss.oauth.service.CuentaService;
 import com.imss.sivimss.oauth.service.UsuarioService;
+import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
@@ -146,10 +147,10 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		codigo = loginUtil.generarCodigo(longitud);
 		
-		EnvioCorreosRequest datosCorreo = loginUtil.cuerpoCorreo(usuario.getNombre(), usuario.getCorreo(), codigo);
+		CorreoRequest correo = new CorreoRequest(usuario.getNombre(), codigo, usuario.getCorreo(), AppConstantes.TIPO_CORREO);
 		
 		//Hacemos el consumo para enviar el codigo por correo
-		resp = providerRestTemplate.consumirServicio(datosCorreo, urlEnvioCorreo);
+		resp = providerRestTemplate.consumirServicio(correo, urlEnvioCorreo);
 		
 		if (resp.getCodigo() != 200) {
 			return resp;

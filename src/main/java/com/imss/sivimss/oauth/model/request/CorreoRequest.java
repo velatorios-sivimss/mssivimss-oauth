@@ -8,7 +8,8 @@ import lombok.Data;
 public class CorreoRequest {
 
 	private String nombre;
-	private String email;
 	private String codigo;
+	private String correoPara;
+	private String tipoCorreo;
 	
 }

@@ -48,6 +48,7 @@ public class AppConstantes {
 	
 	public static final String SIAP_ACTIVO= "ACTIVO";
 	
+	public static final String TIPO_CORREO= "recuperarContrasenia";
 	
 	
 	private AppConstantes() {
