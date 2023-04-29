@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/v1/contrasenia")
+@RequestMapping("/contrasenia")
 public class ContraseniaController {
 	
 	@Autowired
