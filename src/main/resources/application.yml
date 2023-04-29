@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    contextPath: /mssivimss-oauth
+    contextPath: /mssivimss-oauth/v1
 
 spring:
   mvc:
