@@ -14,17 +14,17 @@ public class MenuUtil {
 	public String buscar(String idRol, Integer nivel) {
 		
 		StringBuilder query = new StringBuilder("SELECT ");
-		query.append( "M.ID_MODULO AS idModulo, " );
-		query.append( "M.ID_MODULO_PADRE AS idModuloPadre, " );
-		query.append( "M.ID_FUNCIONALIDAD AS idFuncionalidad, " );
+		query.append( "M.ID_TABLA_MENU AS idModulo, " );
+		query.append( "M.ID_TABLA_PADRE AS idModuloPadre, " );
+		query.append( "M.ID_MODULO AS idFuncionalidad, " );
 		query.append( "M.DES_TITULO AS titulo " );
 		query.append( "FROM SVT_MENU M " );
-		query.append( "LEFT JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_FUNCIONALIDAD " );
+		query.append( "LEFT JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_MODULO " );
 		query.append( "AND RP.ID_ROL = ");
 		query.append( idRol + " ");
-		query.append( " AND RP.CVE_ESTATUS = 1 ");
+		query.append( " AND RP.IND_ACTIVO = 1 ");
 		query.append( "WHERE M.NUM_NIVEL = "  + nivel);
-		query.append( " GROUP BY M.ID_FUNCIONALIDAD " );
+		query.append( " GROUP BY M.ID_MODULO " );
 		
 		log.info( query.toString() );
 		
