@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.imss.sivimss.oauth.beans.Usuario;
 import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.service.UsuarioService;
+import com.imss.sivimss.oauth.util.MensajeEnum;
 
 @Service
 public class UsuarioServiceImpl extends UtileriaService implements UsuarioService {
@@ -26,7 +27,7 @@ public class UsuarioServiceImpl extends UtileriaService implements UsuarioServic
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
 		if( (mapping == null) || (mapping.isEmpty()) ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Usuario no existe");
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.NO_EXISTE_USUARIO.getValor());
 		}else {
 			usuario= new Usuario( mapping.get(0) );
 		}
