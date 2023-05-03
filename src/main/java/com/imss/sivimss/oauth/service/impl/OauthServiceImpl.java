@@ -119,10 +119,9 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		Long tiempo = (long) Integer.parseInt(tiempoString);
 		
 		String token = jwtProvider.createToken(json, tiempo);
-		respuesta.put("token ", token);
 		
 		resp =  new Response<>(false, HttpStatus.OK.value(), mensaje,
-				respuesta );
+				token );
 		
 		return resp;
 		
