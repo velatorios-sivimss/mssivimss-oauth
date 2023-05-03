@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.imss.sivimss.oauth.service.VelatorioService;
 import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
+import com.imss.sivimss.oauth.util.LogUtil;
 import com.imss.sivimss.oauth.util.Response;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,9 @@ public class VelatorioController {
 
 	@Autowired
 	private VelatorioService velatorioService;
+	
+	@Autowired
+	private LogUtil logUtil;
 	
 	@PostMapping("/consulta")
 	public Response<Object> consultaListaGenerica( @RequestBody Map<String, Object> datos ) throws Exception {
