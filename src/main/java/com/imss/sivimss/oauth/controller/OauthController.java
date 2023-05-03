@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.imss.sivimss.oauth.service.MenuService;
 import com.imss.sivimss.oauth.service.OauthService;
 import com.imss.sivimss.oauth.util.AppConstantes;
+import com.imss.sivimss.oauth.util.LogUtil;
 import com.imss.sivimss.oauth.util.Response;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +26,9 @@ public class OauthController {
 	
 	@Autowired
 	private MenuService menuService;
+	
+	@Autowired
+	private LogUtil logUtil;
 	
 	@PostMapping("login")
 	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {

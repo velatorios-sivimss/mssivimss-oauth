@@ -50,6 +50,11 @@ public class AppConstantes {
 	
 	public static final String TIPO_CORREO= "recuperarContrasenia";
 	
+	public static final String ALTA = "alta";
+	public static final String BAJA = "baja";
+	public static final String MODIFICACION = "modificacion";
+	public static final String CONSULTA = "consulta";
+	
 	
 	private AppConstantes() {
 	    throw new IllegalStateException("AppConstantes class");
