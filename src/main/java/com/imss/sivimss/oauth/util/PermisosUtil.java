@@ -1,7 +1,12 @@
 package com.imss.sivimss.oauth.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PermisosUtil {
 
+	private Logger log = LoggerFactory.getLogger(PermisosUtil.class);
+	
 	public String buscarFuncionalidad(String idRol) {
 		
 		StringBuilder query = new StringBuilder("SELECT DISTINCT(ID_FUNCIONALIDAD) ");
@@ -11,6 +16,8 @@ public class PermisosUtil {
 		query.append( BdConstantes.AND );
 		query.append( BdConstantes.ACTIVO );
 		query.append( "ORDER BY ID_FUNCIONALIDAD ASC" );
+		
+		log.info( query.toString() );
 		
 		return query.toString();
 	}
@@ -23,6 +30,8 @@ public class PermisosUtil {
 		query.append( "WHERE RFP.ID_ROL = " + idRol + " ");
 		query.append( "AND RFP.ID_FUNCIONALIDAD = " + idFuncionalidad + " ");
 		query.append( "ORDER BY PER.ID_PERMISO" );
+		
+		log.info( query.toString() );
 		
 		return query.toString();
 	}
