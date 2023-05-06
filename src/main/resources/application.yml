@@ -1,5 +1,5 @@
 server:
-  port: 8079
+  port: 8080
   servlet:
     contextPath: /mssivimss-oauth/v1
 
@@ -11,9 +11,9 @@ spring:
   datasource:
     platform: mariadb
     driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/SVBDQA
-    username: pmsoluciones
-    password: Tr1357.*
+    url: ${msit_CONNECTION_DB}
+    username: ${msit_USERNAME_DB}
+    password: ${msit_PASSWORD_DB}
     timeBetweenEvictionRunsMillis: 1000
     testWhileIdle: true
     validationQuery: SELECT 1
@@ -45,13 +45,13 @@ logging:
     org.hibernate: error
 
 endpoints:
-   dominio-consulta: http://localhost:8090/mssivimss-mod-catalogos
-   envio-correo: http://localhost:8091/mssivimss-envio-correos/envioDeCorreos/envio
-   consulta-siap: http://serviciosdigitalesinterno-stage.imss.gob.mx/serviciosDigitales-rest/v1/externos/siap/matricula/
+   dominio-consulta: ${msit_DOMINIO_CONSULTA}
+   envio-correo: ${msit_CORREO}
+   consulta-siap: ${msit_SIAP}
 jwt:
-  secretkey: funcionamuybienlogin
-  secretkey-flujo: funcionamuybien
-  secretkey-dominios: funcionamuybiendominio
+  secretkey: ${msit_SECRET_KEY_LOGIN}
+  secretkey-flujo: ${msit_SECRET_KEY_FLUJO}
+  secretkey-dominios: ${msit_SECRET_KEY_DOMINIO}
   expiration-milliseconds: 360
   
 management:
@@ -66,18 +66,18 @@ resilience4j.circuitbreaker:
     instances:
       msflujo:
         automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-        failureRateThreshold: '50'
+        failureRateThreshold: ${msit_HILOS}
         slidingWindowType: COUNT_BASED
         event-consumer-buffer-size: '10'
         registerHealthIndicator: 'true'
-        waitDurationInOpenState: 5s
+        waitDurationInOpenState: ${msit_TIEMPO_DURACION}
         permittedNumberOfCallsInHalfOpenState: '3'
         slidingWindowSize: '5'
 resilience4j.retry:
     retryAspectOrder: 2
     instances:
         msflujo:
-           maxAttempts: 3
+           maxAttempts: ${msit_NUMERO_INTENTOS}
            waitDuration: 5s
 resilience4j.timelimiter:
     timeLimiterAspectOrder: 3
@@ -85,9 +85,9 @@ resilience4j.timelimiter:
       msflujo:
         timeout-duration: 3s
         
-formato_fecha: '%d/%m/%Y'
-formato_fecha_hora: '%d/%m/%Y %H:%i:%s'
-patron_formato_fecha_hora: 'dd/MM/yyyy HH:mm:ss'
-ruta-log: 'C:\Users\iceballos\Documents\logs'
+formato_fecha: ${msit_formato_fecha}
+formato_fecha_hora: ${msit_formato_fecha_hora}
+patron_formato_fecha_hora: ${msit_formato_fecha_hora_patron}
+ruta-log: ${msit_ruta_log}
 
 tiempo-vida: 30
