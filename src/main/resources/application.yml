@@ -7,9 +7,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-  cache:
-    redis:
-      time-to-live: 30000
       
   datasource:
     platform: mariadb
@@ -92,3 +89,5 @@ formato_fecha: ${msit_formato_fecha}
 formato_fecha_hora: ${msit_formato_fecha_hora}
 patron_formato_fecha_hora: ${msit_formato_fecha_hora_patron}
 ruta-log: ${msit_ruta_log}
+
+tiempo-vida: 30
