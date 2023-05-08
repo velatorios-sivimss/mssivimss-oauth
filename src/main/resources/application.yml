@@ -90,4 +90,4 @@ formato_fecha_hora: ${msit_formato_fecha_hora}
 patron_formato_fecha_hora: ${msit_formato_fecha_hora_patron}
 ruta-log: ${msit_ruta_log}
 
-tiempo-vida: ${msit_TIEMPO_VIDA]
+tiempo-vida: ${msit_TIEMPO_VIDA}
