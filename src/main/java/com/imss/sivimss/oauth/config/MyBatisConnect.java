@@ -12,9 +12,8 @@ import com.imss.sivimss.oauth.util.LogUtil;
 
 @Component
 public class MyBatisConnect {
-	
-	@Autowired
-	private LogUtil logUtil;
+
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogUtil.class);
 	
 	private AnnotationConfigApplicationContext context = null;
 	
@@ -23,7 +22,7 @@ public class MyBatisConnect {
 			context = new AnnotationConfigApplicationContext(MyBatisConfig.class);
 			return context;
 		} catch (Exception e) {
-			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),e.getMessage(),"");
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -34,7 +33,7 @@ public class MyBatisConnect {
 		try {
 			consultas = context.getBean(Consultas.class);
 		} catch (Exception e) {
-			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),e.getMessage(),"");
+			log.error(e.getMessage());
 			return consultas;
 		}
 		
