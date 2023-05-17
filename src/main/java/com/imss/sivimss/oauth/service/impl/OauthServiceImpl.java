@@ -37,7 +37,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<?> acceder(String user, String contrasenia) throws Exception {
+	public Response<Object> acceder(String user, String contrasenia) throws Exception {
 		
 		List<Map<String, Object>> mapping;
 		Usuario usuario= usuarioService.obtener(user);

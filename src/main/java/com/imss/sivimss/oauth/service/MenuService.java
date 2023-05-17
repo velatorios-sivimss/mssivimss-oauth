@@ -4,10 +4,10 @@ import com.imss.sivimss.oauth.util.Response;
 
 public interface MenuService {
 
-	Response<?> obtener(String idRol) throws Exception;
+	Response<Object> obtener(String idRol) throws Exception;
 	
-	Response<?> mensajes() throws Exception;
+	Response<Object> mensajes() throws Exception;
 	
-	Response<?> permisos(String idRol) throws Exception;
+	Response<Object> permisos(String idRol) throws Exception;
 	
 }

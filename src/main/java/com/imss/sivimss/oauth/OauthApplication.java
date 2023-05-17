@@ -21,7 +21,7 @@ import com.imss.sivimss.oauth.util.NoRedirectSimpleClientHttpRequestFactory;
 public class OauthApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OauthApplication.class, args);
+		SpringApplication.run(OauthApplication.class);
 	}
 
 	@Bean

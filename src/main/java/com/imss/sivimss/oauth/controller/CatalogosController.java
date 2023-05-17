@@ -8,19 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imss.sivimss.oauth.service.CatalogosService;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
-import com.imss.sivimss.oauth.util.LogUtil;
 import com.imss.sivimss.oauth.util.Response;
-import java.util.logging.Level;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/catalogos")
 public class CatalogosController {
-
-	@Autowired
-	private LogUtil logUtil;
 	
 	@Autowired
 	private CatalogosService catalogosService;

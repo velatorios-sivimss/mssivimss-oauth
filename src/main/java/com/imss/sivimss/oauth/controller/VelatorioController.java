@@ -1,6 +1,7 @@
 package com.imss.sivimss.oauth.controller;
 
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,8 @@ public class VelatorioController {
 	@Autowired
 	private LogUtil logUtil;
 	
+	private static final String CONSULTA = "consulta";
+	
 	@PostMapping("/consulta")
 	public Response<Object> consultaListaGenerica( @RequestBody Map<String, Object> datos ) throws Exception {
 		
@@ -36,6 +39,8 @@ public class VelatorioController {
 		if(datos.get(AppConstantes.ID_DELEGACION) != null ) {
 			idDelegacion = datos.get(AppConstantes.ID_DELEGACION).toString();
 		}
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 				velatorioService.consulta( idDelegacion ) );

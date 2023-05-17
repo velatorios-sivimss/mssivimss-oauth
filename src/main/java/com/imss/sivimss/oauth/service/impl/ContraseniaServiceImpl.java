@@ -46,7 +46,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	private static final Logger log = LoggerFactory.getLogger(ContraseniaServiceImpl.class);
 	
 	@Override
-	public Response<?> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
+	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
 		
 		Response<Object> resp;
 		Boolean exito = false;
@@ -129,7 +129,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<?> generarCodigo(String user) throws Exception {
+	public Response<Object> generarCodigo(String user) throws Exception {
 		Usuario usuario= usuarioService.obtener(user);
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
 		List<Map<String, Object>> datos;
@@ -169,7 +169,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<?> validarCodigo(String user, String codigo) throws Exception {
+	public Response<Object> validarCodigo(String user, String codigo) throws Exception {
 		//Obtenemos el codigo desde BD
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
 		List<Map<String, Object>> datos;

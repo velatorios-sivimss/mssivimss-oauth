@@ -49,8 +49,8 @@ public class UtileriaService {
 	@Value("${patron_formato_fecha_hora}") 
 	String patronSQL;
 	
-	protected static Consultas consultas = null;
-	protected static AnnotationConfigApplicationContext context = null;
+	protected Consultas consultas = null;
+	protected AnnotationConfigApplicationContext context;
 
 	private static final Logger log = LoggerFactory.getLogger(UtileriaService.class);
 
@@ -132,16 +132,18 @@ public class UtileriaService {
 
 		Boolean exito = false;
 		Connection connection = database.getConnection();
-		PreparedStatement stmt1 = null;
+		List<PreparedStatement> stmt =  new ArrayList<>();
 		
 		try {
 			
 			connection.setAutoCommit(false);
-			
+			int i=0;
 			for( String actualizacion : querys ) {
 				
-				stmt1 = connection.prepareStatement(actualizacion);
-				stmt1.executeUpdate();
+				stmt.add( connection.prepareStatement(actualizacion) );
+				stmt.get(i).executeUpdate();
+
+				i++;
 				
 			}
 			
@@ -153,7 +155,11 @@ public class UtileriaService {
 		}finally{
 			log.info( "cierra conexion a la base de datos" );    
 			try {
-				if(stmt1!=null) stmt1.close();                                
+				                                
+				for(int i=0; i<stmt.size(); i++) {
+					if(stmt.get(i)!=null) stmt.get(i).close();
+				}
+				
 				if(connection!=null) connection.close();
 			} catch (SQLException ex) {
 				log.error( ex.getMessage() );    

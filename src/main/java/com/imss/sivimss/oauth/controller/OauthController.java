@@ -1,6 +1,7 @@
 package com.imss.sivimss.oauth.controller;
 
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,36 +31,44 @@ public class OauthController {
 	@Autowired
 	private LogUtil logUtil;
 	
+	private static final String CONSULTA = "consulta";
+	
 	@PostMapping("login")
-	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString() ;
 		String contrasenia = datos.get(AppConstantes.CONTRASENIA).toString() ;
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return oauthService.acceder(user, contrasenia);
       
 	}
 	
 	@PostMapping("menu")
-	public Response<?> menu(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> menu(@RequestBody Map<String, Object> datos) throws Exception {
 	
 		String idRol = datos.get(AppConstantes.IDROL).toString() ;
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return menuService.obtener(idRol);
       
 	}
 	
 	@PostMapping("mensajes")
-	public Response<?> mensajes() throws Exception {
+	public Response<Object> mensajes() throws Exception {
 		
 		return menuService.mensajes();
       
 	}
 	
 	@PostMapping("permisos")
-	public Response<?> permisos(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> permisos(@RequestBody Map<String, Object> datos) throws Exception {
 	
 		String idRol = datos.get(AppConstantes.IDROL).toString() ;
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return menuService.permisos(idRol);
       

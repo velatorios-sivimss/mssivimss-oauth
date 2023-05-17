@@ -1,6 +1,7 @@
 package com.imss.sivimss.oauth.controller;
 
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,31 +27,39 @@ public class ContraseniaController {
 	@Autowired
 	private LogUtil logUtil;
 	
+	private static final String CONSULTA = "consulta";
+	
 	@PostMapping("/cambiar")
-	public Response<?> acceder(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString();
 		String contraseniaAnterior = datos.get(AppConstantes.CONTRASENIA_ANTERIOR).toString();
 		String contraseniaNueva = datos.get(AppConstantes.CONTRASENIA_NUEVA).toString();
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return contraseniaService.cambiar(user, contraseniaAnterior, contraseniaNueva);
       
 	}
 	
 	@PostMapping("/genera-codigo")
-	public Response<?> generarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> generarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString();
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return contraseniaService.generarCodigo( user );
       
 	}
 	
 	@PostMapping("/valida-codigo")
-	public Response<?> validarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> validarCodigo(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString();
 		String codigo = datos.get(AppConstantes.CODIGO).toString();
+		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ datos);
 		
 		return contraseniaService.validarCodigo( user, codigo );
       
