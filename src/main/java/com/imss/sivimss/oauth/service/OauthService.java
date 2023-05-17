@@ -4,6 +4,6 @@ import com.imss.sivimss.oauth.util.Response;
 
 public interface OauthService {
 
-	Response<?> acceder(String user, String contrasenia) throws Exception;
+	Response<Object> acceder(String user, String contrasenia) throws Exception;
 	
 }

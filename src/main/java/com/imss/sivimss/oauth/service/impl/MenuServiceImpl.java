@@ -30,7 +30,7 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Cacheable("menu-obtener")
-	public Response<?> obtener(String idRol) throws Exception {
+	public Response<Object> obtener(String idRol) throws Exception {
 		
 		List<List<MenuResponse>> menuBD = new ArrayList<>();
 		MenuUtil menuUtil = new MenuUtil();
@@ -62,7 +62,7 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 
 	@Override
 	@Cacheable("menu-mensajes")
-	public Response<?> mensajes() throws Exception {
+	public Response<Object> mensajes() throws Exception {
 		
 		MenuUtil menuUtil = new MenuUtil();
 		List<Map<String, Object>> datos;
@@ -80,7 +80,7 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Cacheable("menu-permisos")
-	public Response<?> permisos(String idRol) throws Exception {
+	public Response<Object> permisos(String idRol) throws Exception {
 		
 		List<Map<String, Object>> datos;
 		List<Map<String, Object>> mapping;

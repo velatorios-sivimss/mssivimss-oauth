@@ -1,8 +1,6 @@
 package com.imss.sivimss.oauth.util;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -21,45 +19,40 @@ public class LogUtil {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogUtil.class);
 
 
-    public void crearArchivoLog(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion, Authentication authentication) throws IOException {
+    public void crearArchivoLog(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
+
+        File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
+        FileWriter escribirArchivo = null;
+        
         try {
-            Gson json = new Gson();
-            File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
-            FileWriter escribirArchivo = new FileWriter(archivo, true);
-            if (archivo.exists()) {
-                escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
-                escribirArchivo.write("\r\n");
-                escribirArchivo.close();
-            } else {
-                archivo.createNewFile();
-                escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje  + " - " + tiempoEjecucion);
-                escribirArchivo.write("\r\n");
-                escribirArchivo.close();
-            }
+        	escribirArchivo = new FileWriter(archivo, true);
+            escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
+            escribirArchivo.write("\r\n");
+            escribirArchivo.close();
+            escribirArchivo.close();
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
+        } finally {
+            escribirArchivo.close();
         }
 
     }
 
-    public void crearArchivoLogDTO( String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion ) throws IOException {
+    public void crearArchivoLogDTO(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
+        File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
+        FileWriter escribirArchivo=null;
         try {
-            File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
-            FileWriter escribirArchivo = new FileWriter(archivo, true);
-            if (archivo.exists()) {
-                escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
-                escribirArchivo.write("\r\n");
-                escribirArchivo.close();
-            } else {
-                archivo.createNewFile();
-                escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
-                escribirArchivo.write("\r\n");
-                escribirArchivo.close();
-            }
+        	escribirArchivo = new FileWriter(archivo, true);
+            escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
+            escribirArchivo.write("\r\n");
+            escribirArchivo.close();
+            escribirArchivo.close();
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
+        } finally {
+            escribirArchivo.close();
         }
 
     }
