@@ -58,7 +58,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
 		
-		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ login);
 		
 		contraNueva = passwordEncoder.encode(contraNueva);
 		exito = cuentaService.actualizarContra(login.getIdLogin(), login.getIdUsuario(), contraNueva);
@@ -127,6 +127,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 			estatus = EstatusVigenciaEnum.VENCIDA.getId();
 		}
 		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ estatus);
+		
 		return estatus;
 	}
 
@@ -134,9 +136,10 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	@Override
 	public Response<Object> generarCodigo(String user) throws Exception {
 		Usuario usuario= usuarioService.obtener(user);
+		
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ usuario);
 		
-		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
+		Login login = cuentaService.obtenerLoginPorIdUsuario( usuario.getIdUsuario() );
 		List<Map<String, Object>> datos;
 		List<Map<String, Object>> mapping;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
