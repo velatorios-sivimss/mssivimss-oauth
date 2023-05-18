@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import com.imss.sivimss.oauth.exception.BadRequestException;
 import com.imss.sivimss.oauth.model.Login;
 import com.imss.sivimss.oauth.service.CuentaService;
 import com.imss.sivimss.oauth.util.AppConstantes;
+import com.imss.sivimss.oauth.util.LogUtil;
 import com.imss.sivimss.oauth.util.LoginUtil;
 import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
@@ -28,7 +29,8 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	@Value("${endpoints.consulta-siap}")
 	private String urlConsultaSiap;
 	
-	private static final Logger log = LoggerFactory.getLogger(CuentaServiceImpl.class);
+	@Autowired
+	private LogUtil logUtil;
 	
 	private static final String TIP_PARAMETRO = "TIP_PARAMETRO";
 	private static final String FEC_CAMBIO_CONTRASENIA = "FEC_CAMBIO_CONTRASENIA";
@@ -44,7 +46,9 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		Login login;
 		
 		if( datos == null || datos.isEmpty() ) {
-			log.info("No existen datos en BD, entonces se debe crear el  registro");
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"",CONSULTA+" "+ "No existen datos en BD, entonces se debe crear el  registro");
+			
 			dato = insertarDetalle( loginUtil.insertar(idUsuario) , "SVT_LOGIN", "ID_LOGIN");
 			login = modelMapper.map(dato, Login.class);
 		}else {
@@ -70,7 +74,8 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		Login login;
 		
 		if( datos == null || datos.isEmpty() ) {
-			log.info("No existen datos en BD");
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"",CONSULTA+" "+ "No existen datos en BD");
 			throw new BadRequestException(HttpStatus.BAD_REQUEST, "Usuario no Existe");
 		}else {
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
@@ -89,7 +94,6 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			}
 			
 		}
-		
 		
 		return login;
 	}
@@ -119,7 +123,9 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		String siap = mapping.get(0).get(TIP_PARAMETRO).toString();
 		
 		if( siap.equalsIgnoreCase("true") ) {
-			log.info( "Se debe consultar el SIAP" );
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"",CONSULTA+" "+
+			"Se debe consultar el SIAP");
 			estatusSiap = consultaSiap(cveUsuario);
 		}
 		
@@ -203,7 +209,8 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		Map<String, Object> resp;
 		String url = urlConsultaSiap + matricula;
 		
-		log.info( "Url SIAP: {}",  url);
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+				this.getClass().getPackage().toString(),"",CONSULTA+" "+ url);
 		
 		//Hacemos el consumo para consultar el SIAP
 		resp = providerRestTemplate.consumirServicioGet(url);

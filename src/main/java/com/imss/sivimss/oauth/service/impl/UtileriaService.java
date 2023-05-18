@@ -58,6 +58,8 @@ public class UtileriaService {
 	
 	protected static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 	
+	public static final String CONSULTA = "consulta";
+	
 	public List<Map<String, Object>> consultaGenericaPorQuery(String query) throws Exception {
 		List<Map<String, Object>> resp = new ArrayList<>();
 
