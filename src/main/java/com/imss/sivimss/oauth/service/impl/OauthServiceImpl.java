@@ -82,7 +82,7 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		}
 		
 		//Validacion del SIAP
-		cuentaService.validarSiap( user );
+		cuentaService.validarSiap( usuario.getClaveMatricula() );
 		
 		//Validar Fecha de la Contrasenia
 		Integer estatusContra = contraseniaService.validarFecha( login.getFecCamContra() );

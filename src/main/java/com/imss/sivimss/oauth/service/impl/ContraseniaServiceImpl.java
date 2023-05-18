@@ -7,9 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,6 +25,7 @@ import com.imss.sivimss.oauth.util.AppConstantes;
 import com.imss.sivimss.oauth.util.BdConstantes;
 import com.imss.sivimss.oauth.util.ConstantsMensajes;
 import com.imss.sivimss.oauth.util.EstatusVigenciaEnum;
+import com.imss.sivimss.oauth.util.LogUtil;
 import com.imss.sivimss.oauth.util.LoginUtil;
 import com.imss.sivimss.oauth.util.MensajeEnum;
 import com.imss.sivimss.oauth.util.ParametrosUtil;
@@ -43,7 +43,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	private static final Logger log = LoggerFactory.getLogger(ContraseniaServiceImpl.class);
+	@Autowired
+	private LogUtil logUtil;
 	
 	@Override
 	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
@@ -56,6 +57,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		}
 		
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
+		
+		
 		
 		contraNueva = passwordEncoder.encode(contraNueva);
 		exito = cuentaService.actualizarContra(login.getIdLogin(), login.getIdUsuario(), contraNueva);
@@ -131,6 +134,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	@Override
 	public Response<Object> generarCodigo(String user) throws Exception {
 		Usuario usuario= usuarioService.obtener(user);
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ usuario);
+		
 		Login login = cuentaService.obtenerLoginPorCveUsuario( user );
 		List<Map<String, Object>> datos;
 		List<Map<String, Object>> mapping;
@@ -159,7 +164,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		//Guardamos el codigo en la BD
 		Boolean exito = actualizaGenericoPorQuery( loginUtil.actCodSeg(login.getIdLogin(), codigo) );
 		
-		log.info("exito = " + exito.toString());
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+				this.getClass().getPackage().toString(),"",CONSULTA+" "+ exito.toString());
 		
 		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 				"Codigo enviado al correo del Usuario " );
