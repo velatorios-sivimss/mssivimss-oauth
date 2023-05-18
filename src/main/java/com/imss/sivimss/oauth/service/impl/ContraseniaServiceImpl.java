@@ -192,7 +192,9 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString());
 		
 		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CODIGO_INCORRECTO.getValor());
+			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_INCORRECTO.getValor(),
+					null );
+			return resp;
 		}
 		
 		if( login.getFecCodSeguridad() != null && !login.getFecCodSeguridad().isEmpty() ) {
@@ -217,7 +219,8 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_CORRECTO.getValor(),
 						null );
 			}else {
-				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.CODIGO_EXPIRADO.getValor());
+				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_EXPIRADO.getValor(),
+						null );
 			}
 		}
 		

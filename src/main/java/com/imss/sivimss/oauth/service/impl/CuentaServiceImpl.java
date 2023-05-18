@@ -130,7 +130,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		}
 		
 		if( siap.equalsIgnoreCase("true") && !estatusSiap.equalsIgnoreCase(AppConstantes.SIAP_ACTIVO) ) {
-			throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_DESACTIVADO.getValor());
+			throw new BadRequestException(HttpStatus.OK, MensajeEnum.SIAP_DESACTIVADO.getValor());
 		}
 		
 	}
