@@ -20,41 +20,29 @@ public class LogUtil {
 
 
     public void crearArchivoLog(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
-
-        File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
-        FileWriter escribirArchivo = null;
-        
-        try {
-        	escribirArchivo = new FileWriter(archivo, true);
+    	
+        try(FileWriter escribirArchivo = new FileWriter(new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
+        	
             escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
             escribirArchivo.write("\r\n");
-            escribirArchivo.close();
             escribirArchivo.close();
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
-        } finally {
-            escribirArchivo.close();
         }
 
     }
 
     public void crearArchivoLogDTO(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
-        File archivo = new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log");
-        FileWriter escribirArchivo=null;
-        try {
-        	escribirArchivo = new FileWriter(archivo, true);
+       
+        try( FileWriter escribirArchivo = new FileWriter(new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
             escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
             escribirArchivo.write("\r\n");
-            escribirArchivo.close();
             escribirArchivo.close();
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
-        } finally {
-            escribirArchivo.close();
         }
 
     }
-
 }

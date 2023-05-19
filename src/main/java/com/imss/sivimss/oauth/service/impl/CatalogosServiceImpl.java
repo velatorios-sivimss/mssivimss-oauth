@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -20,7 +21,7 @@ public class CatalogosServiceImpl extends UtileriaService implements CatalogosSe
 	private LogUtil logUtil;
 	
 	@Override
-	public CatalogosResponse consulta() throws Exception {
+	public CatalogosResponse consulta() throws IOException {
 		CatalogosUtil catalogosUtil = new CatalogosUtil();
 		CatalogosResponse catalogosResponse = new CatalogosResponse();
 		Catalogos catalogos = new Catalogos();

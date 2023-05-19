@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class VelatorioServiceImpl extends UtileriaService implements VelatorioSe
 	
 	@Override
 	@Cacheable("velatorio-consulta")
-	public List<Map<String, Object>> consulta(String idDelegacion) throws Exception {
+	public List<Map<String, Object>> consulta(String idDelegacion) throws IOException {
 		
 		CatalogosUtil catalogosUtil = new CatalogosUtil();
 		List<Map<String, Object>> resp;

@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	private static final String FEC_CAMBIO_CONTRASENIA = "FEC_CAMBIO_CONTRASENIA";
 	
 	@Override
-	public Login obtenerLoginPorIdUsuario(String idUsuario) throws Exception {
+	public Login obtenerLoginPorIdUsuario(String idUsuario) throws IOException {
 		
 		List<Map<String, Object>> datos;
 		LoginUtil loginUtil = new LoginUtil();
@@ -66,7 +67,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	}
 
 	@Override
-	public Login obtenerLoginPorCveUsuario(String cveUsuario) throws Exception {
+	public Login obtenerLoginPorCveUsuario(String cveUsuario) throws IOException {
 		List<Map<String, Object>> datos;
 		LoginUtil loginUtil = new LoginUtil();
 		List<Login> lista;
@@ -99,7 +100,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	}
 
 	@Override
-	public Boolean actualizarContra(String idLogin, String idUsuario, String contrasenia) throws Exception {
+	public Boolean actualizarContra(String idLogin, String idUsuario, String contrasenia) throws IOException {
 		
 		Boolean exito = false;
 		LoginUtil loginUtil = new LoginUtil();
@@ -111,7 +112,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void validarSiap(String cveUsuario) throws Exception {
+	public void validarSiap(String cveUsuario) throws IOException {
 		List<Map<String, Object>> datos;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
 		List<Map<String, Object>> mapping;
@@ -136,7 +137,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	}
 
 	@Override
-	public void actNumIntentos(String idLogin, Integer numIntentos) throws Exception {
+	public void actNumIntentos(String idLogin, Integer numIntentos) throws IOException {
 		LoginUtil loginUtil = new LoginUtil();
 		Integer maxNumIntentos = obtenerMaxNumIntentos();
 		
@@ -190,7 +191,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Integer obtenerMaxNumIntentos()  throws Exception{
+	public Integer obtenerMaxNumIntentos()  throws IOException{
 		Integer maxNumIntentos;
 		List<Map<String, Object>> datos;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
@@ -204,7 +205,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		return maxNumIntentos;
 	}
 	
-	private String consultaSiap(String matricula) throws Exception {
+	private String consultaSiap(String matricula) throws IOException {
 		String status;
 		Map<String, Object> resp;
 		String url = urlConsultaSiap + matricula;
