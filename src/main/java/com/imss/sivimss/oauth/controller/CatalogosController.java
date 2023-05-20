@@ -1,5 +1,7 @@
 package com.imss.sivimss.oauth.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ public class CatalogosController {
 	private CatalogosService catalogosService;
 	
 	@PostMapping("/consulta")
-	public Response<Object> consultaListaGenerica() throws Exception {
+	public Response<Object> consultaListaGenerica() throws IOException {
 		
 		return new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 				catalogosService.consulta() );

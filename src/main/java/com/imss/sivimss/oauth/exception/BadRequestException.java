@@ -44,4 +44,20 @@ public class BadRequestException extends RuntimeException {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
+
+	public String getDatos() {
+		return datos;
+	}
+
+	public void setDatos(String datos) {
+		this.datos = datos;
+	}
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
 }

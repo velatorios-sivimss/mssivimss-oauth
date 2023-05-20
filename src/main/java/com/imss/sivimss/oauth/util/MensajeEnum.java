@@ -16,7 +16,8 @@ public enum MensajeEnum {
 	CODIGO_EXPIRADO("CODIGO_EXPIRADO", "El Codigo ingresado esta expirado"),
 	SIAP_DESACTIVADO("SIAP_DESACTIVADO", "El usuario esta Desactivado en el SIAP"),
 	SIAP_SIN_CONEXION("SIAP_SIN_CONEXION", "No hay conexion con el SIAP"),
-	NO_EXISTE_USUARIO("NO_EXISTE_USUARIO", "Usuario no existe");
+	NO_EXISTE_USUARIO("NO_EXISTE_USUARIO", "Usuario no existe"),
+	NO_EXISTE_SIAP("70", "No existe el usuario en el SIAP");
 	
 	String valor;
 	String desc;

@@ -25,27 +25,29 @@ public class ProviderServiceRestTemplate {
 	
 	private static final Logger log = LoggerFactory.getLogger(ProviderServiceRestTemplate.class);
 	
+	private static final String MENSAJE = "Ha ocurrido un error al recuperar la informacion";
+	
 	public Response<Object> consumirServicio(Object dato, String url) throws IOException {
 		try {
-			Response respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayToken(url, dato,jwtTokenProvider.createToken(""), Response.class);
+			Response<Object> respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayToken(url, dato,jwtTokenProvider.createToken(""), Response.class);
 			return validarResponse(respuestaGenerado);
 		} catch (IOException exception) {
-			log.error("Ha ocurrido un error al recuperar la informacion");
+			log.error( MENSAJE );
 			throw exception;
 		}
 	}
 	
-	public Response<?> consumirServicioReportes(Map<String, Object> dato, String nombreReporte, String tipoReporte, String url,Authentication authentication) throws IOException {
+	public Response<Object> consumirServicioReportes(Map<String, Object> dato, String nombreReporte, String tipoReporte, String url,Authentication authentication) throws IOException {
 		try {
-			Response respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayReportesToken(url, new DatosReporteDTO(dato,nombreReporte, tipoReporte),jwtTokenProvider.createToken((String) authentication.getPrincipal()), Response.class);
+			Response<Object> respuestaGenerado=restTemplateUtil.sendPostRequestByteArrayReportesToken(url, new DatosReporteDTO(dato,nombreReporte, tipoReporte),jwtTokenProvider.createToken((String) authentication.getPrincipal()), Response.class);
 			return validarResponse(respuestaGenerado);
 		} catch (IOException exception) {
-			log.error("Ha ocurrido un error al recuperar la informacion");
+			log.error(MENSAJE);
 			throw exception;
 		}
 	}
 	
-	public Response<Object>validarResponse(Response respuestaGenerado){
+	public Response<Object>validarResponse(Response<Object> respuestaGenerado){
 		String codigo = respuestaGenerado.getMensaje().substring(0, 3);
 		if (codigo.equals("500") || codigo.equals("404") || codigo.equals("400") || codigo.equals("403")) {
 			Gson gson = new Gson();
@@ -60,12 +62,12 @@ public class ProviderServiceRestTemplate {
 		return respuestaGenerado;
 	}
 	
-	public Map<String, Object> consumirServicioGet(String url) throws Exception {
+	public Map<String, Object> consumirServicioGet(String url) throws IOException {
 		try {
 			Map<String, Object> respuestaGenerado=restTemplateUtil.sendGet(url, Map.class);
 			return respuestaGenerado;
 		} catch (IOException exception) {
-			log.error("Ha ocurrido un error al recuperar la informacion");
+			log.error(MENSAJE);
 			throw exception;
 		}
 	}

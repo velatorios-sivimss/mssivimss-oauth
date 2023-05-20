@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class UsuarioServiceImpl extends UtileriaService implements UsuarioServic
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Usuario obtener(String user) throws Exception {
+	public Usuario obtener(String user) throws IOException {
 		
 		Usuario usuario= new Usuario();
 		List<Map<String, Object>> mapping;

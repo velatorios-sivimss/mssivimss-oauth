@@ -17,8 +17,6 @@ public class QueryHelper implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final transient String ESPACIO = " ";
-	private final transient String AND = " and ";
-	private final transient String OR = " or ";
 
 	private StringBuilder querySelect;
 	private StringBuilder queryJoin;

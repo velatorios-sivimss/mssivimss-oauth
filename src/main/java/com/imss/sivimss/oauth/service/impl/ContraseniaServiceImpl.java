@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -47,7 +48,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	private LogUtil logUtil;
 	
 	@Override
-	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
+	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws IOException {
 		
 		Response<Object> resp;
 		Boolean exito = false;
@@ -134,7 +135,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<Object> generarCodigo(String user) throws Exception {
+	public Response<Object> generarCodigo(String user) throws IOException {
 		Usuario usuario= usuarioService.obtener(user);
 		
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ usuario);

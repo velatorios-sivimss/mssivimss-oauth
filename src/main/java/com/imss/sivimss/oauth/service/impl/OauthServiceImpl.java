@@ -95,7 +95,6 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 			mensaje = MensajeEnum.OK.getValor();
 		}
 		
-		
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("nombre", usuario.getNombre() + " " + usuario.getPaterno() + " " + usuario.getMaterno());
 		mapa.put("curp", usuario.getCurp());

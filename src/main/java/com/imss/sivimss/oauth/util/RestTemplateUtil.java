@@ -3,7 +3,6 @@ package com.imss.sivimss.oauth.util;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -37,9 +36,10 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArray(String url, EnviarDatosRequest body, Class<?> clazz)
+	@SuppressWarnings("unchecked")
+	public Response<Object> sendPostRequestByteArray(String url, EnviarDatosRequest body, Class<?> clazz)
 			throws IOException {
-		Response<?> responseBody = new Response<>();
+		Response<Object> responseBody = null;
 		HttpHeaders headers = RestTemplateUtil.createHttpHeaders();
 
 		HttpEntity<Object> request = new HttpEntity<>(body, headers);
@@ -47,8 +47,7 @@ public class RestTemplateUtil {
 		try {
 			responseEntity = restTemplate.postForEntity(url, request, clazz);
 			if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
-				// noinspection unchecked
-				responseBody = (Response<List<String>>) responseEntity.getBody();
+				responseBody = (Response<Object>) responseEntity.getBody();
 			} else {
 				throw new IOException("Ha ocurrido un error al enviar");
 			}
@@ -56,6 +55,7 @@ public class RestTemplateUtil {
 			throw ioException;
 		} catch (Exception e) {
 			log.error("Fallo al consumir el servicio, {}", e.getMessage());
+			responseBody = new Response<Object>();
 			responseBody.setCodigo(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			responseBody.setError(true);
 			responseBody.setMensaje(e.getMessage());
@@ -71,9 +71,10 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArrayToken(String url, Object body, String subject,
+	@SuppressWarnings("unchecked")
+	public Response<Object> sendPostRequestByteArrayToken(String url, Object body, String subject,
 			Class<?> clazz) throws IOException {
-		Response<?> responseBody = new Response<>();
+		Response<Object> responseBody;
 		HttpHeaders headers = RestTemplateUtil.createHttpHeadersToken(subject);
 
 		HttpEntity<Object> request = new HttpEntity<>(body, headers);
@@ -81,7 +82,7 @@ public class RestTemplateUtil {
 
 		responseEntity = restTemplate.postForEntity(url, request, clazz);
 
-		responseBody = (Response<List<String>>) responseEntity.getBody();
+		responseBody = (Response<Object>) responseEntity.getBody();
 
 		return responseBody;
 	}
@@ -128,9 +129,10 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArrayArchviosToken(String url, EnviarDatosArchivosRequest body,
+	@SuppressWarnings("unchecked")
+	public Response<Object> sendPostRequestByteArrayArchviosToken(String url, EnviarDatosArchivosRequest body,
 			String subject, Class<?> clazz) throws IOException {
-		Response<?> responseBody = new Response<>();
+		Response<Object> responseBody;
 		HttpHeaders headers = RestTemplateUtil.createHttpHeadersArchivosToken(subject);
 
 		ResponseEntity<?> responseEntity = null;
@@ -150,14 +152,14 @@ public class RestTemplateUtil {
 
 			responseEntity = restTemplate.postForEntity(url, request, clazz);
 			if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
-				// noinspection unchecked
-				responseBody = (Response<List<String>>) responseEntity.getBody();
+				responseBody = (Response<Object>) responseEntity.getBody();
 			} else {
 				throw new IOException("Ha ocurrido un error al enviar");
 			}
 		} catch (IOException ioException) {
 			throw ioException;
 		} catch (Exception e) {
+			responseBody = new Response<>();
 			log.error("Fallo al consumir el servicio, {}", e.getMessage());
 			responseBody.setCodigo(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			responseBody.setError(true);
@@ -184,21 +186,22 @@ public class RestTemplateUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public Response<?> sendPostRequestByteArrayReportesToken(String url, DatosReporteDTO body, String subject,
+	@SuppressWarnings("unchecked")
+	public Response<Object> sendPostRequestByteArrayReportesToken(String url, DatosReporteDTO body, String subject,
 			Class<?> clazz) throws IOException {
-		Response<?> responseBody = new Response<>();
+		Response<Object> responseBody = new Response<>();
 		HttpHeaders headers = RestTemplateUtil.createHttpHeadersToken(subject);
 
 		HttpEntity<Object> request = new HttpEntity<>(body, headers);
 		ResponseEntity<?> responseEntity = null;
 		responseEntity = restTemplate.postForEntity(url, request, clazz);
-		responseBody = (Response<List<String>>) responseEntity.getBody();
+		responseBody = (Response<Object>) responseEntity.getBody();
 
 		return responseBody;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> sendGet(String url, Class<?> clazz) throws Exception {
+	public Map<String, Object> sendGet(String url, Class<?> clazz) throws IOException {
 		Map<String, Object> responseBody;
 
 		ResponseEntity<?> responseEntity = null;
@@ -208,9 +211,9 @@ public class RestTemplateUtil {
 		}catch (Exception e) {
 			
 			if(e.getMessage().contains("I/O error")) {
-				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_SIN_CONEXION.getValor());
+				throw new BadRequestException(HttpStatus.OK, MensajeEnum.SIAP_SIN_CONEXION.getValor());
 			}else {
-				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.SIAP_DESACTIVADO.getValor());
+				throw new BadRequestException(HttpStatus.OK, MensajeEnum.NO_EXISTE_SIAP.getValor());
 			}	
 		}
 		

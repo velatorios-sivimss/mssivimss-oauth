@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.controller;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -46,7 +47,7 @@ public class OauthController {
 	}
 	
 	@PostMapping("menu")
-	public Response<Object> menu(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> menu(@RequestBody Map<String, Object> datos) throws IOException {
 	
 		String idRol = datos.get(AppConstantes.IDROL).toString() ;
 		
@@ -64,7 +65,7 @@ public class OauthController {
 	}
 	
 	@PostMapping("permisos")
-	public Response<Object> permisos(@RequestBody Map<String, Object> datos) throws Exception {
+	public Response<Object> permisos(@RequestBody Map<String, Object> datos) throws IOException {
 	
 		String idRol = datos.get(AppConstantes.IDROL).toString() ;
 		

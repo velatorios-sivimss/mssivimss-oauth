@@ -18,8 +18,6 @@ public class ValidacionErrores {
 
 	private String mensaje;
 
-	
-
 	private long codigo;
 
 	private boolean error;
@@ -66,6 +64,14 @@ public class ValidacionErrores {
 		this.mensaje = "Error en la petición";
 		this.codigo = HttpStatus.BAD_REQUEST.value();
 		this.error=true;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 	
 

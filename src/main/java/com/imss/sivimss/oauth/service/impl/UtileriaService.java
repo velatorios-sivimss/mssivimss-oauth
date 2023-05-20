@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.service.impl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -60,7 +61,7 @@ public class UtileriaService {
 	
 	public static final String CONSULTA = "consulta";
 	
-	public List<Map<String, Object>> consultaGenericaPorQuery(String query) throws Exception {
+	public List<Map<String, Object>> consultaGenericaPorQuery(String query) throws IOException {
 		List<Map<String, Object>> resp = new ArrayList<>();
 
 		try {
@@ -71,13 +72,13 @@ public class UtileriaService {
 
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
-			throw new Exception(FALLO_QUERY + e.getMessage());
+			throw new IOException(FALLO_QUERY + e.getMessage());
 		}
 
 		return resp;
 	}
 	
-	public Map<String, Object> insertarDetalle(String query, String tablaNom, String tablaId) throws Exception {
+	public Map<String, Object> insertarDetalle(String query, String tablaNom, String tablaId) throws IOException {
 		IdDto idDto= new IdDto();
 		log.info(query);
 		Map<String, Object> detalle = null;
@@ -102,7 +103,7 @@ public class UtileriaService {
 			
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
-			throw new Exception(FALLO_QUERY + e.getMessage());
+			throw new IOException(FALLO_QUERY + e.getMessage());
 		}
 		
 		return detalle;
@@ -110,7 +111,7 @@ public class UtileriaService {
 	}
 
 	
-	public Boolean actualizaGenericoPorQuery(String query) throws Exception {
+	public Boolean actualizaGenericoPorQuery(String query) throws IOException {
 
 		boolean resp = false;
 	
@@ -124,13 +125,13 @@ public class UtileriaService {
 
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
-			throw new Exception(FALLO_QUERY + e.getMessage());
+			throw new IOException(FALLO_QUERY + e.getMessage());
 		}
 		return resp;
 
 	}
 	
-	public Boolean actualizarMultiple(List<String> querys) throws Exception {
+	public Boolean actualizarMultiple(List<String> querys) throws IOException {
 
 		Boolean exito = false;
 		Connection connection = database.getConnection();
@@ -153,7 +154,7 @@ public class UtileriaService {
 			
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
-			throw new Exception(FALLO_QUERY + e.getMessage());
+			throw new IOException(FALLO_QUERY + e.getMessage());
 		}finally{
 			log.info( "cierra conexion a la base de datos" );    
 			try {
