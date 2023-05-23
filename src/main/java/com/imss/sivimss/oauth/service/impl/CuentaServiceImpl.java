@@ -137,11 +137,12 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 	}
 
 	@Override
-	public void actNumIntentos(String idLogin, Integer numIntentos) throws IOException {
+	public Integer actNumIntentos(String idLogin, Integer numIntentos) throws IOException {
 		LoginUtil loginUtil = new LoginUtil();
 		Integer maxNumIntentos = obtenerMaxNumIntentos();
 		
 		actualizaGenericoPorQuery( loginUtil.actNumIntentos(idLogin, numIntentos, maxNumIntentos) );
+		return maxNumIntentos;
 	}
 
 	@SuppressWarnings("unchecked")
