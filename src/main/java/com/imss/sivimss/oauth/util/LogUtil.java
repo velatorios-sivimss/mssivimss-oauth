@@ -18,10 +18,11 @@ public class LogUtil {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogUtil.class);
 
-
+    private static final String NOMBRE = "oauth";
+    
     public void crearArchivoLog(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
     	
-        try(FileWriter escribirArchivo = new FileWriter(new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
+        try(FileWriter escribirArchivo = new FileWriter(new File(rutaLog + NOMBRE + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
         	
             escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
             escribirArchivo.write("\r\n");
@@ -35,7 +36,7 @@ public class LogUtil {
 
     public void crearArchivoLogDTO(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
        
-        try( FileWriter escribirArchivo = new FileWriter(new File(rutaLog + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
+        try( FileWriter escribirArchivo = new FileWriter(new File(rutaLog + NOMBRE + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
             escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
             escribirArchivo.write("\r\n");
             escribirArchivo.close();
