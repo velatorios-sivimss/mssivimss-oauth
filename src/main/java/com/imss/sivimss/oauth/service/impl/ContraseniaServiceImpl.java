@@ -171,8 +171,11 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
 				this.getClass().getPackage().toString(),"",CONSULTA+" "+ exito.toString());
 		
+		Map<String, String> salida = new HashMap<>();
+		salida.put("correo", usuario.getCorreo());
+		
 		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
-				"Codigo enviado al correo del Usuario " );
+				salida );
 		
 		return resp;
 	}
