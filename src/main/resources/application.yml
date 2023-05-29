@@ -18,7 +18,12 @@ spring:
     testWhileIdle: true
     validationQuery: SELECT 1
     hikari:
-      maximum-pool-size: 1
+      max-lifetime:  ${msit_LIFE_TIME}
+      idle-timeout:  ${msit_TIME_OUT}
+      connection-timeout: ${msit_CONNECTION_TIMEOUT}
+      auto-commit: false
+      maximum-pool-size:  ${msit_CONNECTION_POOL}
+      minimum-idle:  ${msit_CONNECTION_IDLE}
 
   main:
     allow-circular-references: true
