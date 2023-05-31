@@ -41,8 +41,15 @@ public class Usuario {
 		this.password = datos.get("CVE_CONTRASENIA").toString();
 		this.claveMatricula = datos.get("CVE_MATRICULA").toString();
 		this.idOficina = datos.get("ID_OFICINA").toString();
-		this.idDelegacion = datos.get("ID_DELEGACION").toString();
-		this.idVelatorio = datos.get("ID_VELATORIO").toString();
+		
+		if( datos.get("ID_DELEGACION") != null ) {
+			this.idDelegacion = datos.get("ID_DELEGACION").toString();
+		}
+		
+		if( datos.get("ID_VELATORIO") != null ) {
+			this.idVelatorio = datos.get("ID_VELATORIO").toString();
+		}
+		
 		this.idRol = datos.get("ID_ROL").toString();
 		this.desRol = datos.get("DES_ROL").toString();
 		this.curp = datos.get("DES_CURP").toString();
