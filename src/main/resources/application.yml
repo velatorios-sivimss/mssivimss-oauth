@@ -1,9 +1,11 @@
 server:
   port: 8080
   servlet:
-    contextPath: /mssivimss-oauth/v1
+    contextPath: /${spring.application.name}/v1
 
 spring:
+  application:
+    name: mssivimss-oauth
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -50,14 +52,13 @@ logging:
     org.hibernate: error
 
 endpoints:
-   dominio-consulta: ${msit_DOMINIO_CONSULTA}
    envio-correo: ${msit_CORREO}
    consulta-siap: ${msit_SIAP}
 jwt:
   secretkey: ${msit_SECRET_KEY_LOGIN}
   secretkey-flujo: ${msit_SECRET_KEY_FLUJO}
   secretkey-dominios: ${msit_SECRET_KEY_DOMINIO}
-  expiration-milliseconds: 360
+  expiration-milliseconds: ${msit_SECRET_KEY_EXPIRATION}
   
 management:
       endpoints:
@@ -76,23 +77,23 @@ resilience4j.circuitbreaker:
         event-consumer-buffer-size: '10'
         registerHealthIndicator: 'true'
         waitDurationInOpenState: ${msit_TIEMPO_DURACION}
-        permittedNumberOfCallsInHalfOpenState: '3'
+        permittedNumberOfCallsInHalfOpenState: ${msit_NUMERO_INTENTOS}
         slidingWindowSize: '5'
 resilience4j.retry:
     retryAspectOrder: 2
     instances:
         msflujo:
            maxAttempts: ${msit_NUMERO_INTENTOS}
-           waitDuration: 5s
+           waitDuration: ${msit_TIEMPO_DURACION}
 resilience4j.timelimiter:
     timeLimiterAspectOrder: 3
     instances:
       msflujo:
         timeout-duration: 3s
         
-formato_fecha: ${msit_formato_fecha}
+formato_fecha: ${msit_FORMATO_FECHA}
 formato_fecha_hora: ${msit_formato_fecha_hora}
 patron_formato_fecha_hora: ${msit_formato_fecha_hora_patron}
-ruta-log: ${msit_ruta_log}
+ruta-log: ${msit_RUTA_LOG}
 
 tiempo-vida: 30
