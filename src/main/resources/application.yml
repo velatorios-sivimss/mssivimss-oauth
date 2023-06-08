@@ -92,8 +92,8 @@ resilience4j.timelimiter:
         timeout-duration: 3s
         
 formato_fecha: ${msit_FORMATO_FECHA}
-formato_fecha_hora: ${msit_formato_fecha_hora}
-patron_formato_fecha_hora: ${msit_formato_fecha_hora_patron}
+formato_fecha_hora: ${msit_FORMATO_FECHA_HORA}
+patron_formato_fecha_hora: ${msit_FORMATO_FECHA_HORA_PATRON}
 ruta-log: ${msit_RUTA_LOG}
 
 tiempo-vida: ${msit_TIEMPO_VIDA}
