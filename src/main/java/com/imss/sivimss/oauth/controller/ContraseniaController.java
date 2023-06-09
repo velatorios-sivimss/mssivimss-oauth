@@ -31,7 +31,7 @@ public class ContraseniaController {
 	private static final String CONSULTA = "consulta";
 	
 	@PostMapping("/cambiar")
-	public Response<Object> acceder(@RequestBody Map<String, Object> datos) throws IOException {
+	public Response<Object> acceder(@RequestBody Map<String, Object> datos) throws Exception {
 		
 		String user = datos.get(AppConstantes.USUARIO).toString();
 		String contraseniaAnterior = datos.get(AppConstantes.CONTRASENIA_ANTERIOR).toString();

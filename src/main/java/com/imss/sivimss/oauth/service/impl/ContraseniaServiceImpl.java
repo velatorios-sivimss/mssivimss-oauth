@@ -48,7 +48,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	private LogUtil logUtil;
 	
 	@Override
-	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws IOException {
+	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
 		
 		Response<Object> resp;
 		Boolean exito = false;
@@ -61,6 +61,10 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ login);
 		
+		if( !contraAnterior.isEmpty()) {
+			validar(user, contraAnterior, contraNueva, login);
+		}
+		
 		contraNueva = passwordEncoder.encode(contraNueva);
 		exito = cuentaService.actualizarContra(login.getIdLogin(), login.getIdUsuario(), contraNueva);
 		
@@ -70,7 +74,6 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		resp =  new Response<>(false, HttpStatus.OK.value(), ConstantsMensajes.EXITO.getMensaje(),
 				exito );
-		
 		
 		return resp;
 	}
@@ -229,6 +232,30 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		}
 		
 		return resp;
+	}
+	
+	private void validar(String user, String contraAnterior, String contraNueva, Login login) throws Exception {
+		
+		Usuario usuario= usuarioService.obtener(user);
+		Integer intentos = cuentaService.validaNumIntentos(login.getIdLogin(), login.getFecBloqueo(), login.getNumIntentos());
+		String mensaje = null;
+		
+		if ( !passwordEncoder.matches( contraAnterior, usuario.getPassword() ) && !contraAnterior.equals( usuario.getPassword() ) ) {
+			intentos++;
+			Integer maxNumIntentos = cuentaService.actNumIntentos(login.getIdLogin(), intentos);
+			
+			if( intentos >= maxNumIntentos ) {
+				mensaje =  MensajeEnum.INTENTOS_FALLIDOS.getValor();
+			}else {
+				mensaje = MensajeEnum.CONTRASENIA_INCORRECTA.getValor();
+			}
+			
+			throw new BadRequestException(HttpStatus.BAD_REQUEST, mensaje);
+			
+		}else {
+			cuentaService.actNumIntentos(login.getIdLogin(), 0);
+		}
+		
 	}
 	
 }
