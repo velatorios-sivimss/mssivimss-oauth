@@ -213,7 +213,7 @@ public class RestTemplateUtil {
 			if(e.getMessage().contains("I/O error")) {
 				throw new BadRequestException(HttpStatus.OK, MensajeEnum.SIAP_SIN_CONEXION.getValor());
 			}else {
-				throw new BadRequestException(HttpStatus.OK, MensajeEnum.NO_EXISTE_SIAP.getValor());
+				throw new BadRequestException(HttpStatus.OK, MensajeEnum.SIAP_DESACTIVADO.getValor());
 			}	
 		}
 		

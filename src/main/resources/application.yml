@@ -52,7 +52,7 @@ logging:
     org.hibernate: error
 
 endpoints:
-   envio-correo: ${msit_CORREO}
+   envio-correo: ${msit_CORREO_REC_CON}
    consulta-siap: ${msit_SIAP}
 jwt:
   secretkey: ${msit_SECRET_KEY_LOGIN}
