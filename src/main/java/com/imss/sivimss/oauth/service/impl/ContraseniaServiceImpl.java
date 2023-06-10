@@ -50,6 +50,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 	@Override
 	public Response<Object> cambiar(String user, String contraAnterior, String contraNueva) throws Exception {
 		
+		Usuario usuario= usuarioService.obtener(user);
 		Response<Object> resp;
 		Boolean exito = false;
 		
@@ -62,7 +63,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ login);
 		
 		if( !contraAnterior.isEmpty()) {
-			validar(user, contraAnterior, contraNueva, login);
+			validar(user, contraAnterior, contraNueva, login, usuario);
 		}
 		
 		contraNueva = passwordEncoder.encode(contraNueva);
@@ -234,9 +235,9 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		return resp;
 	}
 	
-	private void validar(String user, String contraAnterior, String contraNueva, Login login) throws Exception {
+	private void validar(String user, String contraAnterior, String contraNueva, Login login, Usuario usuario) throws Exception {
 		
-		Usuario usuario= usuarioService.obtener(user);
+		
 		Integer intentos = cuentaService.validaNumIntentos(login.getIdLogin(), login.getFecBloqueo(), login.getNumIntentos());
 		String mensaje = null;
 		
