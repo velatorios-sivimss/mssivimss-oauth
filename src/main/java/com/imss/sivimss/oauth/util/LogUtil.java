@@ -21,13 +21,18 @@ public class LogUtil {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogUtil.class);
     
+    private static String RETORNO = "\r\n";
+    
     public void crearArchivoLog(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
     	
         try(FileWriter escribirArchivo = new FileWriter(new File(rutaLog + nombre + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
         	
-            escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
-            escribirArchivo.write("\r\n");
+        	String peticion = "" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion;
+        	log.info(peticion);
+            escribirArchivo.write(peticion);
+            escribirArchivo.write(RETORNO);
             escribirArchivo.close();
+            
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
@@ -38,9 +43,13 @@ public class LogUtil {
     public void crearArchivoLogDTO(String tipoLog, String origen, String clasePath, String mensaje, String tiempoEjecucion) throws IOException {
        
         try( FileWriter escribirArchivo = new FileWriter(new File(rutaLog + nombre + new SimpleDateFormat("ddMMyyyy").format(new Date()) + ".log"), true) ) {
-            escribirArchivo.write("" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion);
-            escribirArchivo.write("\r\n");
+            
+        	String peticion = "" + formatoFechaLog + " --- [" + tipoLog + "] " + origen + " " + clasePath + " : " + mensaje + " - " + tiempoEjecucion;
+        	log.info(peticion);
+            escribirArchivo.write(peticion);
+            escribirArchivo.write(RETORNO);
             escribirArchivo.close();
+            
         } catch (Exception e) {
             log.error("No se puede escribir el log.");
             log.error(e.getMessage());
