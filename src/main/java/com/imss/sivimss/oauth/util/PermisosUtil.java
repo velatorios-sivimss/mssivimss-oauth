@@ -29,6 +29,7 @@ public class PermisosUtil {
 		query.append( "INNER JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RFP ON RFP.ID_PERMISO = PER.ID_PERMISO ");
 		query.append( "WHERE RFP.ID_ROL = " + idRol + " ");
 		query.append( "AND RFP.ID_FUNCIONALIDAD = " + idFuncionalidad + " ");
+		query.append( "AND RFP.IND_ACTIVO = '1' " );
 		query.append( "ORDER BY PER.ID_PERMISO" );
 		
 		log.info( query.toString() );
