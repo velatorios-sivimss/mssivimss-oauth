@@ -53,7 +53,7 @@ logging:
 
 endpoints:
    envio-correo: ${msit_CORREO_REC_CON}
-   consulta-siap: ${msit_SIAP}
+   consulta-siap: ${msit_SIAP}/
 jwt:
   secretkey: ${msit_SECRET_KEY_LOGIN}
   secretkey-flujo: ${msit_SECRET_KEY_FLUJO}
