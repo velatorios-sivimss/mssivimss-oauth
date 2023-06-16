@@ -199,6 +199,9 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		Integer tiempoCodigo = Integer.parseInt(mapping.get(0).get(BdConstantes.TIP_PARAMETRO).toString());
 		
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+				this.getClass().getPackage().toString(),"","Tiempo Vida Codigo "+ tiempoCodigo);
+		
 		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
 			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_INCORRECTO.getValor(),
 					null );
@@ -206,15 +209,22 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		}
 		
 		if( login.getFecCodSeguridad() != null && !login.getFecCodSeguridad().isEmpty() ) {
+			
 			SimpleDateFormat formatter;
 			Calendar calendar = Calendar.getInstance();
 			formatter = new SimpleDateFormat(PATTERN);
 			
 			Date fechaCodigo = formatter.parse(login.getFecCodSeguridad());
 			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Fecha Codigo "+ fechaCodigo);
+			
 			calendar.setTime(fechaCodigo);
 			calendar.add(Calendar.MINUTE , tiempoCodigo);
 			fechaCodigo = calendar.getTime();
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Fecha Vigencia "+ fechaCodigo);
 			
 			datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
 			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
@@ -222,6 +232,12 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 			formatter = new SimpleDateFormat(patronSQL);
 			
 			Date actual =  formatter.parse(tiempoSQL);
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Fecha Actual BD "+ actual);
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Codigo Vigente? "+ actual.before(fechaCodigo));
 			
 			if( actual.before(fechaCodigo) ) {
 				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_CORRECTO.getValor(),
