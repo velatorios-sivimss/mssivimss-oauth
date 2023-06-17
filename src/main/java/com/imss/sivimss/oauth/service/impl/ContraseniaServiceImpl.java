@@ -2,6 +2,7 @@ package com.imss.sivimss.oauth.service.impl;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -169,11 +170,17 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 			return resp;
 		}
 		
-		//Guardamos el codigo en la BD
-		Boolean exito = actualizaGenericoPorQuery( loginUtil.actCodSeg(login.getIdLogin(), codigo) );
+		//Guardamos el codigo en la BD y Guardamos el historial
+		List<String> querys = new ArrayList<>();
+		querys.add( loginUtil.actCodSeg(login.getIdLogin(), codigo) );
+		querys.add( loginUtil.historial(login.getIdLogin(), codigo) );
+		
+		Boolean exito = actualizarMultiple( querys );
 		
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
 				this.getClass().getPackage().toString(),"",CONSULTA+" "+ exito.toString());
+		
+		
 		
 		Map<String, String> salida = new HashMap<>();
 		salida.put("correo", usuario.getCorreo());
@@ -204,8 +211,28 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 				this.getClass().getPackage().toString(),"","Tiempo Vida Codigo "+ tiempoCodigo);
 		
 		if( login.getCodSeguridad()!=null && !login.getCodSeguridad().equals(codigo) ) {
-			resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_INCORRECTO.getValor(),
-					null );
+			
+			//Validamos si es un codigo anterior
+			datos = consultaGenericaPorQuery( loginUtil.conteo( login.getIdLogin(), codigo ) );
+			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
+			
+			Integer conteo = Integer.parseInt(mapping.get(0).get("conteo").toString());
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Conteo de Codigos "+ conteo);
+			
+			if(conteo >=1 ) {
+				
+				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_EXPIRADO.getValor(),
+						null );
+				
+			}else {
+				
+				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_INCORRECTO.getValor(),
+						null );
+				
+			}
+			
 			return resp;
 		}
 		

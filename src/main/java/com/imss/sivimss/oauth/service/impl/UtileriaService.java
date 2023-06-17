@@ -143,6 +143,8 @@ public class UtileriaService {
 			int i=0;
 			for( String actualizacion : querys ) {
 				
+				log.info(actualizacion);
+				
 				stmt.add( connection.prepareStatement(actualizacion) );
 				stmt.get(i).executeUpdate();
 

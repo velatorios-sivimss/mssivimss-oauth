@@ -128,4 +128,33 @@ public class LoginUtil {
 		
 	}
 	
+	public String historial(String idLogin, String codigo) {
+		
+		QueryHelper q = new QueryHelper("INSERT INTO SVT_HIST_CODIGO_SEGURIDAD");
+		q.agregarParametroValues("ID_LOGIN", "'" + idLogin + "'");
+		q.agregarParametroValues("CVE_CODIGO_SEGURIDAD", "'" + codigo + "'");
+		q.agregarParametroValues("FEC_CODIGO_SEGURIDAD", "NOW()");
+		
+		return q.obtenerQueryInsertar();
+		
+	}
+	
+	public String conteo(String idLogin, String codigo) {
+		
+		StringBuilder query = new StringBuilder("SELECT \r\n"
+				+ "count( ID_HIST_CODIGO_SEGURIDAD ) AS conteo\r\n"
+				+ "FROM\r\n"
+				+ "SVT_HIST_CODIGO_SEGURIDAD\r\n"
+				+ "WHERE\r\n"
+				+ "ID_LOGIN = '");
+		query.append( idLogin );
+		query.append("'\r\n"
+				+ "AND CVE_CODIGO_SEGURIDAD = '");
+		query.append( codigo );
+		query.append("'");
+		
+		return query.toString();
+		
+	}
+	
 }
