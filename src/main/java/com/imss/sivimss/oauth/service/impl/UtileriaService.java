@@ -65,7 +65,7 @@ public class UtileriaService {
 		List<Map<String, Object>> resp = new ArrayList<>();
 
 		try {
-
+			log.info(query);
 			context = con.conectar();
 			consultas = con.crearBeanDeConsultas();
 			resp = consultas.selectHashMap(query);
