@@ -111,4 +111,21 @@ public class LoginUtil {
 		
 	}
 	
+	public String difTiempo(String idLogin) {
+		
+		StringBuilder query = new StringBuilder("SELECT\r\n"
+				+ "LOGIN.ID_LOGIN AS idLogin,\r\n"
+				+ "LOGIN.FEC_CODIGO_SEGURIDAD AS fecCodigoSeguridad,\r\n"
+				+ "CURRENT_TIMESTAMP() AS tiempoActual,\r\n"
+				+ "ROUND((CURRENT_TIMESTAMP() - LOGIN.FEC_CODIGO_SEGURIDAD ) / 100) AS diferencia\r\n"
+				+ "FROM     SVT_LOGIN LOGIN\r\n"
+				+ "WHERE     LOGIN.ID_LOGIN = '");
+		query.append( idLogin );
+		query.append("'\r\n"
+				+ "LIMIT     1");
+		
+		return query.toString();
+		
+	}
+	
 }

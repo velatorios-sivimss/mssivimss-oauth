@@ -193,6 +193,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		List<Map<String, Object>> mapping;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
 		Response<Object> resp = null;
+		LoginUtil loginUtil = new LoginUtil();
 		
 		datos = consultaGenericaPorQuery( parametrosUtil.tiempoCodigo() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
@@ -210,36 +211,20 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		
 		if( login.getFecCodSeguridad() != null && !login.getFecCodSeguridad().isEmpty() ) {
 			
-			SimpleDateFormat formatter;
-			Calendar calendar = Calendar.getInstance();
-			formatter = new SimpleDateFormat(PATTERN);
-			
-			Date fechaCodigo = formatter.parse(login.getFecCodSeguridad());
-			
-			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
-					this.getClass().getPackage().toString(),"","Fecha Codigo "+ fechaCodigo);
-			
-			calendar.setTime(fechaCodigo);
-			calendar.add(Calendar.MINUTE , tiempoCodigo);
-			fechaCodigo = calendar.getTime();
-			
-			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
-					this.getClass().getPackage().toString(),"","Fecha Vigencia "+ fechaCodigo);
-			
-			datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
+			//Validando vigencia del Codigo de Autenticacion
+			datos = consultaGenericaPorQuery( loginUtil.difTiempo( login.getIdLogin() ) );
 			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
-			String tiempoSQL = mapping.get(0).get("tiempo").toString();
-			formatter = new SimpleDateFormat(patronSQL);
-			
-			Date actual =  formatter.parse(tiempoSQL);
 			
 			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
-					this.getClass().getPackage().toString(),"","Fecha Actual BD "+ actual);
+					this.getClass().getPackage().toString(),"","Datos Codigo Seguridad "+ mapping);
+			
+			Integer diferencia = Integer.parseInt(mapping.get(0).get("diferencia").toString());
 			
 			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
-					this.getClass().getPackage().toString(),"","Codigo Vigente? "+ actual.before(fechaCodigo));
+					this.getClass().getPackage().toString(),"","Diferencia de Tiempo "+ diferencia);
 			
-			if( actual.before(fechaCodigo) ) {
+			
+			if( diferencia <= tiempoCodigo ) {
 				resp =  new Response<>(false, HttpStatus.OK.value(), MensajeEnum.CODIGO_CORRECTO.getValor(),
 						null );
 			}else {

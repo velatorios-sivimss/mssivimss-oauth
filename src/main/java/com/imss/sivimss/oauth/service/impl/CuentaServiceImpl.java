@@ -82,6 +82,9 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			lista = Arrays.asList(modelMapper.map(datos, Login[].class));
 			login = lista.get(0);
 			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Datos del Login " + datos);
+			
 			if( datos.get(0).get(FEC_CAMBIO_CONTRASENIA) != null ) {
 				login.setFecCamContra( datos.get(0).get(FEC_CAMBIO_CONTRASENIA).toString() );
 			}
@@ -93,6 +96,9 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 			if( datos.get(0).get("FEC_CODIGO_SEGURIDAD") != null ) {
 				login.setFecCodSeguridad( datos.get(0).get("FEC_CODIGO_SEGURIDAD").toString() );
 			}
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Objeto Login Mapeado" + login);
 			
 		}
 		
