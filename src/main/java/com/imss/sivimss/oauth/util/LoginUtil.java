@@ -117,7 +117,7 @@ public class LoginUtil {
 				+ "LOGIN.ID_LOGIN AS idLogin,\r\n"
 				+ "LOGIN.FEC_CODIGO_SEGURIDAD AS fecCodigoSeguridad,\r\n"
 				+ "CURRENT_TIMESTAMP() AS tiempoActual,\r\n"
-				+ "ROUND((CURRENT_TIMESTAMP() - LOGIN.FEC_CODIGO_SEGURIDAD ) / 100) AS diferencia\r\n"
+				+ "TIMESTAMPDIFF(MINUTE,LOGIN.FEC_CODIGO_SEGURIDAD,CURRENT_TIMESTAMP()) AS diferencia\r\n"
 				+ "FROM     SVT_LOGIN LOGIN\r\n"
 				+ "WHERE     LOGIN.ID_LOGIN = '");
 		query.append( idLogin );
@@ -152,6 +152,23 @@ public class LoginUtil {
 				+ "AND CVE_CODIGO_SEGURIDAD = '");
 		query.append( codigo );
 		query.append("'");
+		
+		return query.toString();
+		
+	}
+	
+	public String difTiempoBloqueo(String idLogin) {
+		
+		StringBuilder query = new StringBuilder("SELECT\r\n"
+				+ "LOGIN.ID_LOGIN AS idLogin,\r\n"
+				+ "LOGIN.FEC_BLOQUEO AS fecBloqueo,\r\n"
+				+ "CURRENT_TIMESTAMP() AS tiempoActual,\r\n"
+				+ "TIMESTAMPDIFF(MINUTE,LOGIN.FEC_BLOQUEO,CURRENT_TIMESTAMP()) AS diferencia\r\n"
+				+ "FROM     SVT_LOGIN LOGIN\r\n"
+				+ "WHERE     LOGIN.ID_LOGIN ='");
+		query.append( idLogin );
+		query.append("'\r\n"
+				+ "LIMIT     1");
 		
 		return query.toString();
 		
