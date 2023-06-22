@@ -1,10 +1,7 @@
 package com.imss.sivimss.oauth.service.impl;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,30 +164,25 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		
 		if( fechaBloqueo!=null && !fechaBloqueo.isEmpty() ) {
 			
-			SimpleDateFormat formatter;
-			Calendar calendar = Calendar.getInstance();
-			formatter = new SimpleDateFormat(PATTERN);
-			
-			Date bloqueo = formatter.parse(fechaBloqueo);
-			calendar.setTime(bloqueo);
-			calendar.add(Calendar.MINUTE , tiempoBloqueo);
-			bloqueo = calendar.getTime();
-			
-			datos = consultaGenericaPorQuery( parametrosUtil.obtenerFecha(formatoSQL) );
+			datos = consultaGenericaPorQuery( loginUtil.difTiempo( idLogin ) );
 			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
-			String tiempoSQL = mapping.get(0).get("tiempo").toString();
-			formatter = new SimpleDateFormat(patronSQL);
 			
-			Date actual =  formatter.parse(tiempoSQL);
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Datos Fecha Bloqueo "+ mapping);
 			
-			if( actual.after(bloqueo) ) {
+			Integer diferencia = Integer.parseInt(mapping.get(0).get("diferencia").toString());
+			
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),"","Diferencia de Tiempo "+ diferencia);
+			
+			if( diferencia > tiempoBloqueo ) {
 				//resetear numBloqueo
 				intentos = 0;
 				actualizaGenericoPorQuery( loginUtil.actNumIntentos(idLogin, 0, 1) );
 			}else {
 				throw new BadRequestException(HttpStatus.BAD_REQUEST, MensajeEnum.INTENTOS_FALLIDOS.getValor());
 			}
-			
+
 		}
 		
 		return intentos;
