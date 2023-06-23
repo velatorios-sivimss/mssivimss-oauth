@@ -60,6 +60,7 @@ public class LoginUtil {
 		query.append( SVT_LOGIN + " " );
 		query.append( "SET `FEC_CAMBIO_CONTRASENIA` = NOW(), " );
 		query.append( "`CVE_ESTATUS_CUENTA` = '"+ BdConstantes.ESTATUS_ACTIVO +"' " );
+		query.append( ", `FEC_BLOQUEO` = null " );
 		query.append( "WHERE (`ID_LOGIN` = '"+ idLogin +"') " );
 		
 		lista.add( query.toString() );
