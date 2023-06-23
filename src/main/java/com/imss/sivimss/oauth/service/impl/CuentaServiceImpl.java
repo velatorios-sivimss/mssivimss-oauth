@@ -164,7 +164,7 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		
 		if( fechaBloqueo!=null && !fechaBloqueo.isEmpty() ) {
 			
-			datos = consultaGenericaPorQuery( loginUtil.difTiempo( idLogin ) );
+			datos = consultaGenericaPorQuery( loginUtil.difTiempoBloqueo( idLogin ) );
 			mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 			
 			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
