@@ -121,6 +121,10 @@ public class CuentaServiceImpl extends UtileriaService implements CuentaService 
 		List<Map<String, Object>> mapping;
 		String estatusSiap = "";
 		
+		if(cveUsuario == null || cveUsuario.isEmpty()) {
+			return; 
+		}
+		
 		datos = consultaGenericaPorQuery( parametrosUtil.consultarSiap() );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		
