@@ -41,13 +41,18 @@ public class MenuServiceImpl extends UtileriaService implements MenuService {
 		Response<Object> resp;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
 		List<Map<String, Object>> mapping;
+		String query = parametrosUtil.numNiveles();
 		
-		datos = consultaGenericaPorQuery( parametrosUtil.numNiveles() );
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ query);
+				
+		datos = consultaGenericaPorQuery( query );
 		mapping = Arrays.asList(modelMapper.map(datos, HashMap[].class));
 		Integer niveles = Integer.parseInt( mapping.get(0).get("TIP_PARAMETRO").toString() );
 		
 		for(int i=1; i<=niveles; i++) {
-			datos = consultaGenericaPorQuery( menuUtil.buscar(idRol, i) );
+			query = menuUtil.buscar(idRol, i);
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ query);
+			datos = consultaGenericaPorQuery( query );
 			menuBD.add( Arrays.asList(modelMapper.map(datos, MenuResponse[].class)) );
 		}
 		
