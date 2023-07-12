@@ -19,7 +19,7 @@ public class MenuUtil {
 		query.append( "M.ID_MODULO AS idFuncionalidad, " );
 		query.append( "M.DES_TITULO AS titulo " );
 		query.append( "FROM SVT_MENU M " );
-		query.append( "LEFT JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_MODULO " );
+		query.append( "INNER JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_MODULO " );
 		query.append( "AND RP.ID_ROL = ");
 		query.append( idRol + " ");
 		query.append( " AND RP.IND_ACTIVO = 1 ");
