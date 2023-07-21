@@ -99,4 +99,14 @@ public class CatalogosUtil {
 		return query.toString();
 	}
 	
+	public String mesesPago() {
+		
+		StringBuilder query = new StringBuilder("SELECT ID_MES AS id, ");
+		query.append( "DES_MES AS 'desc' " );
+		query.append( "FROM SVC_MESES_PAGO " );
+		query.append( "WHERE IND_ACTIVO = '1' " );
+		query.append( "ORDER BY ID_MES ASC " );
+		
+		return query.toString();
+	}
 }

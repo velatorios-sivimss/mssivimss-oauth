@@ -58,6 +58,10 @@ public class CatalogosServiceImpl extends UtileriaService implements CatalogosSe
 		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ query);
 		List<Map<String, Object>> unidadesMedicas = consultaGenericaPorQuery( query );
 		
+		query = catalogosUtil.mesesPago();
+		logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),this.getClass().getPackage().toString(),"",CONSULTA+" "+ query);
+		List<Map<String, Object>> mesesPago = consultaGenericaPorQuery( query );
+		
 		catalogos.setDelegaciones(delegaciones);
 		catalogos.setNivelOficina(nivelOficina);
 		catalogos.setParentesco(parentesco);
@@ -66,6 +70,7 @@ public class CatalogosServiceImpl extends UtileriaService implements CatalogosSe
 		catalogos.setTipoOrden(tipoOrden);
 		catalogos.setTipoPension(tipoPension);
 		catalogos.setUnidadesMedicas(unidadesMedicas);
+		catalogos.setMesesPago(mesesPago);
 		
 		catalogosResponse.setCatalogos(catalogos);
 		
