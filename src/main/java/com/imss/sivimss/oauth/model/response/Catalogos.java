@@ -17,5 +17,6 @@ public class Catalogos {
 	List<Map<String, Object>> tipoPension;
 	List<Map<String, Object>> unidadesMedicas;
 	List<Map<String, Object>> mesesPago;
+	List<Map<String, Object>> estatusPlanSFPA;
 
 }
