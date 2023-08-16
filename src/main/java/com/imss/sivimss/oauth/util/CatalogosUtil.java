@@ -109,4 +109,15 @@ public class CatalogosUtil {
 		
 		return query.toString();
 	}
+	
+	public String estatusPlanSFPA() {
+		
+		StringBuilder query = new StringBuilder("SELECT ID_ESTATUS_PLAN_SFPA AS id, ");
+		query.append( "DES_ESTATUS_PLAN_SFPA AS 'desc' " );
+		query.append( "FROM SVC_ESTATUS_PLAN_SFPA " );
+		query.append( "WHERE IND_ACTIVO = '1' " );
+		query.append( "ORDER BY ID_ESTATUS_PLAN_SFPA ASC " );
+		
+		return query.toString();
+	}
 }
