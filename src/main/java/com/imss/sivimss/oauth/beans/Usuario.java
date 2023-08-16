@@ -56,7 +56,7 @@ public class Usuario {
 		
 		this.idRol = datos.get("ID_ROL").toString();
 		this.desRol = datos.get("DES_ROL").toString();
-		this.curp = datos.get("DES_CURP").toString();
+		this.curp = datos.get("CVE_CURP").toString();
 		this.claveUsuario = datos.get("CVE_USUARIO").toString();
 		this.activo = datos.get("IND_ACTIVO").toString();
 	}

@@ -26,7 +26,7 @@ public class CatalogosUtil {
 	public String velatorios(String idDelegacion) {
 		
 		StringBuilder query = new StringBuilder("SELECT ID_VELATORIO AS id, ");
-		query.append( "REF_VELATORIO AS 'desc' " );
+		query.append( "DES_VELATORIO AS 'desc' " );
 		query.append( "FROM SVC_VELATORIO " );
 		
 		if( idDelegacion!=null && !idDelegacion.equalsIgnoreCase("null")) {
