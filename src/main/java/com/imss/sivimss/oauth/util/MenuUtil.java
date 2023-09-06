@@ -25,7 +25,6 @@ public class MenuUtil {
 		query.append( " AND RP.IND_ACTIVO = 1 ");
 		query.append( " AND RP.ID_PERMISO = 3 ");
 		query.append( "WHERE M.NUM_NIVEL = "  + nivel);
-		query.append( " GROUP BY M.ID_MODULO " );
 		
 		log.info( query.toString() );
 		
