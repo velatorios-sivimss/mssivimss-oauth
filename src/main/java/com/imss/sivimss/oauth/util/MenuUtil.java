@@ -17,7 +17,7 @@ public class MenuUtil {
 		query.append( "M.ID_TABLA_MENU AS idModulo, " );
 		query.append( "M.ID_TABLA_PADRE AS idModuloPadre, " );
 		query.append( "M.ID_MODULO AS idFuncionalidad, " );
-		query.append( "M.DES_TITULO AS titulo " );
+		query.append( "M.REF_TITULO AS titulo " );
 		query.append( "FROM SVT_MENU M " );
 		query.append( "INNER JOIN SVC_ROL_FUNCIONALIDAD_PERMISO RP ON RP.ID_FUNCIONALIDAD = M.ID_MODULO " );
 		query.append( "AND RP.ID_ROL = ");

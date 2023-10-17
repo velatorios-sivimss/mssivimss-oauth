@@ -37,7 +37,7 @@ public class Usuario {
 		this.nombre = datos.get("NOM_USUARIO").toString();
 		this.paterno = datos.get("NOM_APELLIDO_PATERNO").toString();
 		this.materno = datos.get("NOM_APELLIDO_MATERNO").toString();
-		this.correo = datos.get("DES_CORREOE").toString();
+		this.correo = datos.get("REF_CORREOE").toString();
 		this.password = datos.get("CVE_CONTRASENIA").toString();
 		
 		if( datos.get("CVE_MATRICULA") != null ) {
