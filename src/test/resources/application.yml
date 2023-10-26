@@ -14,9 +14,9 @@ spring:
   datasource:
     platform: mariadb
     driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/SVBDQA
-    username: pmsoluciones
-    password: Tr1357.*
+    url: 'jdbc:mysql://10.250.10.47:3306/SIVIBDQA?useunicode=true&characterEncoding=utf-8&useJDBCCompilantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimeZone=America/Mexico_city'
+    username: 'SIVIBDQA_USER'
+    password: 'user_QASIVI'
     timeBetweenEvictionRunsMillis: 1000
     testWhileIdle: true
     validationQuery: SELECT 1
