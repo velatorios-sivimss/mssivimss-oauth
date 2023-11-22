@@ -1,6 +1,7 @@
 package com.imss.sivimss.oauth.service.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +83,7 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Integer validarFecha(String fecha) throws Exception {
+	public Integer validarFecha(String fecha) throws IOException {
 		List<Map<String, Object>> datos;
 		ParametrosUtil parametrosUtil = new ParametrosUtil();
 		List<Map<String, Object>> mapping;
@@ -111,7 +112,16 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		numMeses = Integer.parseInt(sNumMeses);
 		
 		formatter = new SimpleDateFormat(PATTERN);
-		fechaActual = formatter.parse(fecha);
+		
+		
+		try {
+			fechaActual = formatter.parse(fecha);
+		} catch (ParseException e) {
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),e.getMessage(),CONSULTA + 
+					" Error al convertir la fecha");
+			throw new IOException("Error al convertir la fecha", e.getCause());
+		}
 		
 		calendar.setTime(fechaActual);
 		calendar.add(Calendar.MONTH , numMeses);
@@ -125,7 +135,14 @@ public class ContraseniaServiceImpl extends UtileriaService implements Contrasen
 		String tiempoSQL = mapping.get(0).get("tiempo").toString();
 		formatter = new SimpleDateFormat(patronSQL);
 		
-		fechaActual =  formatter.parse(tiempoSQL);
+		try {
+			fechaActual =  formatter.parse(tiempoSQL);
+		} catch (ParseException e) {
+			logUtil.crearArchivoLog(Level.INFO.toString(),this.getClass().getSimpleName(),
+					this.getClass().getPackage().toString(),e.getMessage(),CONSULTA + 
+					" Error al convertir la fecha");
+			throw new IOException("Error al convertir la fecha", e.getCause());
+		}
 		
 		if( fechaActual.after(fechaProxVencer) && fechaActual.before(fechaVencida) ) {
 			estatus = EstatusVigenciaEnum.PROXIMA_VENCER.getId();

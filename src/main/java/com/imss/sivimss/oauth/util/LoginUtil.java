@@ -8,6 +8,7 @@ import java.util.Random;
 public class LoginUtil {
 	
 	private static final String SVT_LOGIN = "SVT_LOGIN";
+	private static final String RN = "'\r\n";
 	
 	public String buscarPorIdUsuario(String idUsuario) {
 		
@@ -122,7 +123,7 @@ public class LoginUtil {
 				+ "FROM     SVT_LOGIN LOGIN\r\n"
 				+ "WHERE     LOGIN.ID_LOGIN = '");
 		query.append( idLogin );
-		query.append("'\r\n"
+		query.append(RN
 				+ "LIMIT     1");
 		
 		return query.toString();
@@ -149,7 +150,7 @@ public class LoginUtil {
 				+ "WHERE\r\n"
 				+ "ID_LOGIN = '");
 		query.append( idLogin );
-		query.append("'\r\n"
+		query.append(RN
 				+ "AND CVE_CODIGO_SEGURIDAD = '");
 		query.append( codigo );
 		query.append("'");
@@ -168,7 +169,7 @@ public class LoginUtil {
 				+ "FROM     SVT_LOGIN LOGIN\r\n"
 				+ "WHERE     LOGIN.ID_LOGIN ='");
 		query.append( idLogin );
-		query.append("'\r\n"
+		query.append(RN
 				+ "LIMIT     1");
 		
 		return query.toString();
