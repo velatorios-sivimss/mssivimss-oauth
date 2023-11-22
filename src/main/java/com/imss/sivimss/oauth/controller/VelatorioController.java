@@ -1,5 +1,6 @@
 package com.imss.sivimss.oauth.controller;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -32,7 +33,7 @@ public class VelatorioController {
 	private static final String CONSULTA = "consulta";
 	
 	@PostMapping("/consulta")
-	public Response<Object> consultaListaGenerica( @RequestBody Map<String, Object> datos ) throws Exception {
+	public Response<Object> consultaListaGenerica( @RequestBody Map<String, Object> datos ) throws IOException {
 		
 		String idDelegacion = null;
 		
