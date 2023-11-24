@@ -34,10 +34,10 @@ public class Usuario {
 	
 	public Usuario(Map<String, Object> datos) {
 		this.idUsuario = datos.get("ID_USUARIO").toString();
-		this.nombre = datos.get("NOM_USUARIO").toString();
-		this.paterno = datos.get("NOM_APELLIDO_PATERNO").toString();
-		this.materno = datos.get("NOM_APELLIDO_MATERNO").toString();
-		this.correo = datos.get("REF_CORREOE").toString();
+		this.nombre = datos.get("NOM_PERSONA").toString();
+		this.paterno = datos.get("NOM_PRIMER_APELLIDO").toString();
+		this.materno = datos.get("NOM_SEGUNDO_APELLIDO").toString();
+		this.correo = datos.get("REF_CORREO").toString();
 		this.password = datos.get("CVE_CONTRASENIA").toString();
 		
 		if( datos.get("CVE_MATRICULA") != null ) {
@@ -64,11 +64,27 @@ public class Usuario {
 	
 	public String buscarUsuario(String user) {
 		
-		StringBuilder query = new StringBuilder(BdConstantes.SELECT_USUARIOS);
-		query.append( "INNER JOIN SVC_ROL ROL ON ROL.ID_ROL = US.ID_ROL " );
-		query.append( BdConstantes.WHERE );
-		query.append( BdConstantes.CVE_USUARIO + " = ");
-		query.append( "'" + user + "' " );
+		StringBuilder query = new StringBuilder("SELECT\r\n"
+				+ "US.ID_USUARIO,\r\n"
+				+ "PER.NOM_PERSONA,\r\n"
+				+ "PER.NOM_PRIMER_APELLIDO,\r\n"
+				+ "PER.NOM_SEGUNDO_APELLIDO,\r\n"
+				+ "PER.REF_CORREO,\r\n"
+				+ "US.CVE_CONTRASENIA,\r\n"
+				+ "US.CVE_MATRICULA,\r\n"
+				+ "US.ID_OFICINA,\r\n"
+				+ "US.ID_DELEGACION,\r\n"
+				+ "US.ID_VELATORIO,\r\n"
+				+ "ROL.ID_ROL,\r\n"
+				+ "ROL.DES_ROL,\r\n"
+				+ "PER.CVE_CURP,\r\n"
+				+ "US.CVE_USUARIO,\r\n"
+				+ "US.IND_ACTIVO\r\n"
+				+ "FROM SVT_USUARIOS US \r\n"
+				+ "INNER JOIN SVC_ROL ROL ON ROL.ID_ROL = US.ID_ROL \r\n"
+				+ "INNER JOIN SVC_PERSONA PER ON PER.ID_PERSONA = US.ID_PERSONA\r\n"
+				+ "WHERE CVE_USUARIO = ");
+		query.append( "'" + user + "' \r\n" );
 		query.append( BdConstantes.LIMIT );
 		
 		return query.toString();
