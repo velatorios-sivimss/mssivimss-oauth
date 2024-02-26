@@ -85,6 +85,7 @@ public class Usuario {
 				+ "INNER JOIN SVC_PERSONA PER ON PER.ID_PERSONA = US.ID_PERSONA\r\n"
 				+ "WHERE CVE_USUARIO = ");
 		query.append( "'" + user + "' \r\n" );
+		query.append( "AND ROL.ID_ROL != 150  \r\n" );
 		query.append( BdConstantes.LIMIT );
 		
 		return query.toString();
