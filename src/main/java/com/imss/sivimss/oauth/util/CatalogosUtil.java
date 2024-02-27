@@ -101,11 +101,11 @@ public class CatalogosUtil {
 	
 	public String mesesPago() {
 		
-		StringBuilder query = new StringBuilder("SELECT ID_MES AS id, ");
-		query.append( "DES_MES AS 'desc' " );
-		query.append( "FROM SVC_MESES_PAGO " );
+		StringBuilder query = new StringBuilder("SELECT ID_TIPO_PAGO_MENSUAL AS id, ");
+		query.append( "DES_TIPO_PAGO_MENSUAL AS 'desc' " );
+		query.append( "FROM SVC_TIPO_PAGO_MENSUAL " );
 		query.append( "WHERE IND_ACTIVO = '1' " );
-		query.append( "ORDER BY ID_MES ASC " );
+		query.append( "ORDER BY ID_TIPO_PAGO_MENSUAL ASC " );
 		
 		return query.toString();
 	}
