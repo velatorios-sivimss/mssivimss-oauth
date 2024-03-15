@@ -23,6 +23,8 @@ import com.imss.sivimss.oauth.service.OauthService;
 import com.imss.sivimss.oauth.service.UsuarioService;
 import com.imss.sivimss.oauth.util.Response;
 
+
+
 @Service
 public class OauthServiceImpl extends UtileriaService implements OauthService {
 	
@@ -129,6 +131,8 @@ public class OauthServiceImpl extends UtileriaService implements OauthService {
 		
 		resp =  new Response<>(false, HttpStatus.OK.value(), mensaje,
 				token );
+		
+		registrarBitacora(usuario.getIdUsuario());		
 		
 		return resp;
 		
