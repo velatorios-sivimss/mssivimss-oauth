@@ -25,42 +25,42 @@ import com.imss.sivimss.oauth.security.JwtProvider;
 
 @Service
 public class UtileriaService {
-	
+
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	JwtProvider jwtProvider;
-	
+
 	@Autowired
 	private MyBatisConnect con;
-	
+
 	@Autowired
 	private Database database;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	ProviderServiceRestTemplate providerRestTemplate;
-	
+
 	@Value("${formato_fecha_hora}") 
 	String formatoSQL;
-	
+
 	@Value("${patron_formato_fecha_hora}") 
 	String patronSQL;
-	
+
 	protected Consultas consultas = null;
 	protected AnnotationConfigApplicationContext context;
 
 	private static final Logger log = LoggerFactory.getLogger(UtileriaService.class);
 
 	private static final String FALLO_QUERY = "Fallo al ejecutar el Query  ";
-	
+
 	protected static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
-	
+
 	public static final String CONSULTA = "consulta";
-	
+
 	public List<Map<String, Object>> consultaGenericaPorQuery(String query) throws IOException {
 		List<Map<String, Object>> resp = new ArrayList<>();
 
@@ -77,44 +77,44 @@ public class UtileriaService {
 
 		return resp;
 	}
-	
+
 	public Map<String, Object> insertarDetalle(String query, String tablaNom, String tablaId) throws IOException {
 		IdDto idDto= new IdDto();
 		log.info(query);
 		Map<String, Object> detalle = null;
-		
+
 		StringBuilder consulta = new StringBuilder();
-		
+
 		try {
 
 			context = con.conectar();
 			consultas = con.crearBeanDeConsultas();
 			consultas.insert(query, idDto);
-			
+
 			consulta.append("SELECT * FROM ");
 			consulta.append(tablaNom);
 			consulta.append(" WHERE ");
 			consulta.append(tablaId);
 			consulta.append(" = ");
 			consulta.append(idDto.getId());
-			
+
 			List<Map<String, Object>> lista = consultaGenericaPorQuery(consulta.toString());
 			detalle = lista.get(0);
-			
+
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
 			throw new IOException(FALLO_QUERY + e.getMessage());
 		}
-		
+
 		return detalle;
 
 	}
 
-	
+
 	public Boolean actualizaGenericoPorQuery(String query) throws IOException {
 
 		boolean resp = false;
-	
+
 		log.info(query);
 
 		try {
@@ -130,49 +130,74 @@ public class UtileriaService {
 		return resp;
 
 	}
-	
+
 	public Boolean actualizarMultiple(List<String> querys) throws IOException {
 
 		Boolean exito = false;
 		Connection connection = database.getConnection();
 		List<PreparedStatement> stmt =  new ArrayList<>();
-		
+
 		try {
-			
+
 			connection.setAutoCommit(false);
 			int i=0;
 			for( String actualizacion : querys ) {
-				
+
 				log.info(actualizacion);
-				
+
 				stmt.add( connection.prepareStatement(actualizacion) );
 				stmt.get(i).executeUpdate();
 
 				i++;
-				
+
 			}
-			
+
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			log.error(FALLO_QUERY + ", {}", e.getMessage());
 			throw new IOException(FALLO_QUERY + e.getMessage());
 		}finally{
 			log.info( "cierra conexion a la base de datos" );    
 			try {
-				                                
+
 				for(int i=0; i<stmt.size(); i++) {
 					if(stmt.get(i)!=null) stmt.get(i).close();
 				}
-				
+
 				if(connection!=null) connection.close();
 			} catch (SQLException ex) {
 				log.error( ex.getMessage() );    
 			}
 		}
-		
+
 		exito = true;
-		
+
 		return exito;
+	}
+
+	private String insertarBitacora (String id) {
+		String query = "INSERT\r\n"
+				+ "INTO\r\n"
+				+ "SVH_BITACORA_DOCUMENTOS (ID_TIPO_TRANSACCION, ID_USUARIO)\r\n"
+				+ "VALUES\r\n"
+				+ "(4,"+id+")\r\n";
+		return query;
+	}
+	
+	public void registrarBitacora(String id) throws IOException{
+		try {
+			String query = 	insertarBitacora(id);
+			IdDto idDto = new IdDto();
+			context = con.conectar();
+			consultas = con.crearBeanDeConsultas();
+			consultas.insert(query, idDto);
+			
+
+		} catch (Exception e) {
+			log.error(FALLO_QUERY + ", {}", e.getMessage());
+			throw new IOException(FALLO_QUERY + e.getMessage());
+		}
+
 	}
 }
